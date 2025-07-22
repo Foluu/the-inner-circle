@@ -1,6 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  const socket = io("http://localhost:3000"); // Change in prod
+  const socket = io("https://the-inner-circle-rad8.onrender.com"); // Change in prod
 
   let currentSpaceId = null;
 
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Fetch spaces and populate sidebar
   async function loadSpaces() {
-  const res = await fetch("http://localhost:3000/spaces", {
+  const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Fetch bubble count separately
 
-    const bubblesRes = await fetch(`http://localhost:3000/bubbles/${space._id}`, {
+    const bubblesRes = await fetch(`https://the-inner-circle-rad8.onrender.com/bubbles/${space._id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bubbleArea.innerHTML = ""; // Clear previous
 
   try {
-    const res = await fetch(`http://localhost:3000/bubbles/${spaceId}`, {
+    const res = await fetch(`https://the-inner-circle-rad8.onrender.com/bubbles/${spaceId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

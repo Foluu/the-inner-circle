@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadSpaces() {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:3000/spaces", {
+      const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       for (const space of spaces) {
         // Fetch bubbles count
-        const bubbleRes = await fetch(`http://localhost:3000/bubbles/${space._id}`, {
+        const bubbleRes = await fetch(`https://the-inner-circle-rad8.onrender.com/bubbles/${space._id}`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch("http://localhost:3000/spaces/create", {
+      const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -157,7 +157,7 @@ openJoinBtn.addEventListener("click", async () => {
   joinSpaceList.innerHTML = `<p class="loading-text">Loading spaces...</p>`;
 
   try {
-    const res = await fetch("http://localhost:3000/spaces/all", {
+    const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/all", {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -193,7 +193,7 @@ openJoinBtn.addEventListener("click", async () => {
         const spaceId = btn.getAttribute("data-id");
 
         try {
-          const res = await fetch(`http://localhost:3000/spaces/join/${spaceId}`, {
+          const res = await fetch(`https://the-inner-circle-rad8.onrender.com/spaces/join/${spaceId}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
