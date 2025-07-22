@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Space | Inner Circle</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/icn.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Normalize Css -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <!-- Main Css -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- Bootstrap Css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="css/animate.min.css">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="fonts/flaticon.css">
+    <!-- Flaticon CDN -->
+    <!-- Font Awesome (v6) CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-...your-key..." 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Modernizr Js -->
+    <!-- <script src="js/modernizr-3.6.0.min.js"></script> -->
+
+    <!-- <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script> -->
+
+  <style>
+
+/* Reset some defaults */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background-color: #f3e1f0;
+  color: #333;
+}
+
+/*  Preloader  */
+
+#preloader {
+  position: fixed;
+  inset: 0;
+  background-color: #0e0e0e; /* or transparent if you prefer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease;
+  opacity: 1;
+}
+
+/* Spinner image */
+#preloader img {
+  width: 60px;
+  height: 60px;
+  /* opacity: 0.4; */
+  animation: spin 2s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
+}
+
+/* Hide state */
+#preloader.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Spin animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Layout wrapper */
+.space-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #f9f9f9;
+  border-right: 1px solid #ddd;
+  padding: 1rem;
+  height: 700px;
+  border: 0.5px solid;
+  border-color: #cf3cc5;
+  margin-top: 0.73rem;
+  margin-left: 0.75rem;
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #000000;
+}
+
+.space-list {
+  list-style: none;
+}
+
+.space-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}
+
+.space-list li:hover {
+  background-color: #eaeaea;
+}
+
+.space-list .icon {
+  margin-right: 0.5rem;
+  color: #aaa;
+}
+
+.space-list .count {
+  background-color: #ddd;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+}
+
+/* Chat area */
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f3e1f0; /* light pastel pink/purple */
+  padding: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Header */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.chat-header h3 {
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #444;
+}
+
+.chat-controls i {
+  margin-left: 1rem;
+  cursor: pointer;
+  color: #777;
+}
+
+/* Bubbles section */
+.bubble-area {
+  padding: 1rem;
+  height: 85vh;
+  overflow-y: auto;
+  background: #f9f9f9;
+  border: 0.5px solid;
+  border-color: #cf3cc5;
+}
+
+.bubble {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.bubble-content {
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  max-width: 75%;
+}
+
+.bubble-content strong {
+  font-size: 0.85rem;
+  color: #961b8e;
+}
+
+.bubble-content p {
+  margin: 5px 0 0;
+  font-size: 0.95rem;
+}
+
+.bubble-content .timestamp {
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 4px;
+  display: block;
+  text-align: right;
+}
+
+
+/* Input bar */
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: #fff;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.chat-input button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #666;
+  cursor: pointer;
+}
+
+.chat-input input {
+  flex: 1;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 0.5px solid;
+  border-color: #cf3cc5;
+  background-color: #f0f0f0;
+}
+
+.chat-input .send-btn {
+  background-color: #cf3cc5;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.chat-input .send-btn:hover {
+  background-color: #781371;
+}
+
+#dictate-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #d841ce;
+  cursor: pointer;
+  transition: color .2s;
+}
+#dictate-btn.listening {
+  color: #ff4757;       /* Red glow while listening */
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1);   }
+  50%{ transform: scale(1.15);}
+  100%{transform: scale(1);   }
+}
+
+
+  </style>
+
+</head>
+
+<body>
+
+<!-- Preloader -->
+        <div id="preloader">
+        <img src="images/preloader-icon.png" alt="Loading..." />
+        </div>
+
+  <div class="space-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+      <h1>
+        <a href="home.html" style="text-decoration: none; color: #cf3cc5;">
+          <b>Spaces</b>
+        </a>
+      </h1>
+      <p> </p>
+
+      <ul class="space-list" id="spaceList">
+        <!-- Dynamic spaces will be injected here -->
+      </ul>
+
+    </aside>
+
+    <!-- Main Space -->
+    <main class="chat-area">
+
+      <header class="chat-header">
+        <h3><i class="fas fa-rocket"></i>             <span id="spaceTitle"></span></h3>
+
+        <div class="chat-controls">
+          <i class="fas fa-search"></i>
+          <i class="fas fa-bell"></i>
+          <i class="fas fa-cog"></i>
+        </div>
+
+      </header>
+
+      
+      <!-- Bubbles Section -->
+      <section class="bubble-area" id="bubbleArea">
+        <!-- Bubbles will be dynamically added here -->
+      </section>
+
+
+      <!-- Chat Input -->
+      <footer class="chat-input">
+
+        <button><i class="fas fa-plus"></i></button>
+        <div></div>
+        <button><i class="fas fa-smile"></i></button><p> </p>
+
+        <input type="text" id="bubbleInput" placeholder="Blow a bubble..." /><p> </p>
+
+        <button><i class="fas fa-microphone"  id="dictate-btn" title="Dictate message"></i></button><p> </p>
+        <button class="send-btn" id="send-btn">Send</button>
+
+      </footer>
+
+
+    </main>
+
+
+  </div>
+
+
+  <!-- Preloader Js -->
+    <script>
+    window.addEventListener("load", () => {
+        const preloader = document.getElementById("preloader");
+        preloader.classList.add("hide");
+
+        setTimeout(() => {
+        preloader.style.display = "none";
+        }, 700); // Match transition
+    });
+    </script>
+  <!-- Socket.io & Custom Script -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/src/js/space.js"></script>
+</body>
+
+
+
+</html>
