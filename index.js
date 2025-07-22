@@ -9,8 +9,8 @@ import authroute from "./routes/auth.js";
 import "./config.js";
 import spaceRoutes from "./routes/space.js";
 import bubbleRoutes from "./routes/bubble.js";
-import Bubble from "./models/Bubble.js";
-import Space from "./models/Space.js";
+import Bubble from "./models/bubble.js";
+import Space from "./models/space.js";
 
 
 const app = express();
