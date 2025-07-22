@@ -1,7 +1,7 @@
 
 import express from "express";
-import Bubble from "../models/Bubble.js"; 
-import Space from "../models/Space.js";
+import Bubble from "../models/bubble.js"; 
+import Space from "../models/space.js";
 import { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();

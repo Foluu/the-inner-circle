@@ -1,5 +1,5 @@
 import express from "express";
-import Space from "../models/Space.js"; 
+import Space from "../models/space.js"; 
 import authMiddleware, { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
