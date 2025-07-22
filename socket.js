@@ -2,7 +2,7 @@
 // socket.js
 
 
-const Bubble = require("./models/Bubble");
+const Bubble = require("./models/bubble");
 
 function setupSocket(io) {
   io.on("connection", (socket) => {
