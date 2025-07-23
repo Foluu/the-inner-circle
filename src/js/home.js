@@ -144,96 +144,94 @@ document.addEventListener("DOMContentLoaded", () => {
 //======================== Join a Space Modal ===========================
 
 // Modal Elements
-const openJoinBtn = document.getElementById("openJoinSpaceModal");
-const closeJoinBtn = document.getElementById("closeJoinSpaceModal");
 const joinModal = document.getElementById("joinSpaceModal");
+const closeJoinBtn = document.getElementById("closeJoinSpaceModal");
 const joinSpaceList = document.getElementById("joinSpaceList");
 
 
 
-// Open Modal
-openJoinBtn.addEventListener("click", async () => {
-  joinModal.classList.remove("hidden");
-  joinSpaceList.innerHTML = `<p class="loading-text">Loading spaces...</p>`;
+// Attach listener to ANY button or anchor that should open the modal
+document.querySelectorAll(".openJoinSpaceModal").forEach((btn) => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/all", {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    joinModal.classList.remove("hidden");
+    joinSpaceList.innerHTML = `<p class="loading-text">Loading spaces...</p>`;
 
-    const spaces = await res.json();
-
-    joinSpaceList.innerHTML = ""; // Clear loading state
-
-    if (!spaces.length) {
-      joinSpaceList.innerHTML = `<p>No public spaces found.</p>`;
-      return;
-    }
-
-    spaces.forEach((space) => {
-      const card = document.createElement("div");
-      card.className = "space-card";
-      card.innerHTML = `
-        <h3>${space.name}</h3>
-        <p>${space.description || "No description"}</p>
-        <p><strong>Created by:</strong> ${space.createdBy?.name || "Unknown"}</p>
-        <button data-id="${space._id}">Join</button>
-      `;
-      joinSpaceList.appendChild(card);
-    });
-
-
-
-    // Attach event listeners to buttons
-    joinSpaceList.querySelectorAll("button").forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const spaceId = btn.getAttribute("data-id");
-
-        try {
-          const res = await fetch(`https://the-inner-circle-rad8.onrender.com/spaces/join/${spaceId}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${localStorage.getItem("token")}`
-            },
-          });
-
-          const result = await res.json();
-
-          if (res.ok) {
-
-            console.log("response:", result);
-
-            alert(`Joined space: ${result.space.name}`);
-
-            joinModal.classList.add("hidden");
-          } else {
-            alert(result.message || "Could not join space");
-          }
-        } catch (err) {
-          console.error("Join failed:", err);
-          alert("Something went wrong");
-        }
+    try {
+      const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/all", {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
       });
-    });
+
+      const spaces = await res.json();
+      joinSpaceList.innerHTML = ""; // Clear loading state
+
+      if (!spaces.length) {
+        joinSpaceList.innerHTML = `<p>No public spaces found.</p>`;
+        return;
+      }
+
+      spaces.forEach((space) => {
+        const card = document.createElement("div");
+        card.className = "space-card";
+        card.innerHTML = `
+          <h3>${space.name}</h3>
+          <p>${space.description || "No description"}</p>
+          <p><strong>Created by:</strong> ${space.createdBy?.name || "Unknown"}</p>
+          <button data-id="${space._id}">Join</button>
+        `;
+        joinSpaceList.appendChild(card);
+      });
 
 
-  } catch (err) {
-    console.error("Error loading spaces:", err);
-    joinSpaceList.innerHTML = `<p>Error fetching spaces</p>`;
-  }
+
+
+      // Attach join logic to each "Join" button
+      joinSpaceList.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const spaceId = btn.getAttribute("data-id");
+
+          try {
+            const res = await fetch(`https://the-inner-circle-rad8.onrender.com/spaces/join/${spaceId}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+              },
+            });
+
+            const result = await res.json();
+
+            if (res.ok) {
+              alert(`Joined space: ${result.space.name}`);
+              joinModal.classList.add("hidden");
+            } else {
+              alert(result.message || "Could not join space");
+            }
+          } catch (err) {
+            console.error("Join failed:", err);
+            alert("Something went wrong");
+          }
+        });
+      });
+
+    } catch (err) {
+      console.error("Error loading spaces:", err);
+      joinSpaceList.innerHTML = `<p>Error fetching spaces</p>`;
+    }
+  });
 });
 
 
-// Close Modal
+
+
+// Close modal
 closeJoinBtn.addEventListener("click", () => {
   joinModal.classList.add("hidden");
-
 });
-
 
 
 
