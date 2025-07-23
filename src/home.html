@@ -49,6 +49,86 @@
   margin-top: 20px;
 }
 
+/* Mobile menu toggle for responsiveness */
+
+
+/* Hamburger icon */
+.mobile-menu-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10001;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+
+	/* Mobile menu styles */
+        .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -260px; /* hidden by default */
+        height: 100vh;
+        width: 260px;
+        background-color: #2f0526;
+        z-index: 10002;
+        transition: right 0.3s ease;
+        box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+        padding: 1rem;
+        }
+
+        .mobile-menu.menu-visible {
+        right: 0;
+        }
+
+
+
+	.mobile-menu-header {
+	display: flex;
+	justify-content: flex-end;
+	}
+
+	.mobile-menu-list {
+	list-style: none;
+	padding: 1rem 0;
+	}
+
+	.mobile-menu-list li {
+	padding: 0.75rem 0;
+	border-bottom: 1px solid #e642ca;
+	}
+
+	.mobile-menu-list a {
+	text-decoration: none;
+	color: #ffffff;
+	font-size: 1rem;
+	}
+
+	/* Backdrop */
+	.menu-backdrop {
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0,0,0,0.4);
+	z-index: 10001;
+	}
+
+	.hidden {
+	display: none;
+	}
+/* Header */
+	.header {
+		background: #000000;
+		z-index: 9999;
+	}
+
+/* end of script */
+
+
+
+
 /* Table cells */
 #space-list-table td, 
 #space-list-table th {
@@ -310,6 +390,12 @@
 
                                 </ul>
                             </nav>
+
+                            <!-- Mobile view Toggle Button -->
+                            <button id="mobileMenuToggle" class="mobile-menu-toggle d-lg-none">
+                            <i class="fas fa-bars"></i>
+                            </button>
+
                             
                         </div>
 
@@ -357,7 +443,34 @@
             </div>
 
         </header>
+
+            <!-- Mobile Menu Overlay -->
+            <div id="mobileMenu" class="mobile-menu">
+                <div class="mobile-menu-header">
+                    <button id="mobileMenuClose" class="close-btn" style="background-color: #2f0526;">&times;</button>
+                </div>
+                <ul class="mobile-menu-list">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="#">Edit Profile</a></li>
+                    <li><a href="#" id="openCreateSpaceMobile">Create Space</a></li>
+                    <li><a href="#" class="openJoinSpaceModal">Join a Space</a></li>
+                    <li><a href="space.html">Explore Galaxy</a></li>
+                    <li><a href="#">Manage Admin Setup</a></li>
+                    <li><a href="#">Notification Settings</a></li>
+                    <li><a href="#">Themes</a></li>
+                    <li><a href="login.html">Logout</a></li>
+                </ul>
+            </div>
+            <!-- Backdrop -->
+            <div id="mobileMenuBackdrop" class="menu-backdrop hidden"></div>
+
         <!-- Header Area End Here -->
+
+
+
+
+
+
 
 
 
@@ -679,6 +792,30 @@
     <script src="js/main.js"></script> -->
     
     <script src="js/home.js"></script>
+
+    <script>
+        const mobileMenuBtn = document.getElementById("mobileMenuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const closeMobileMenu = document.getElementById("mobileMenuClose");
+        const mobileBackdrop = document.getElementById("mobileMenuBackdrop");
+
+        mobileMenuBtn.addEventListener("click", () => {
+        mobileMenu.classList.add("menu-visible");
+        mobileBackdrop.classList.remove("hidden");
+        });
+
+        closeMobileMenu.addEventListener("click", () => {
+        mobileMenu.classList.remove("menu-visible");
+        mobileBackdrop.classList.add("hidden");
+        });
+
+        mobileBackdrop.addEventListener("click", () => {
+        mobileMenu.classList.remove("menu-visible");
+        mobileBackdrop.classList.add("hidden");
+        });
+
+    </script>
+
 
 </body>
 
