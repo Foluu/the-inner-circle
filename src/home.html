@@ -34,6 +34,14 @@
 
 <style>
 
+ /* Custom svg for inner circle style */
+    .str1 {stroke:#E330CE;stroke-width:6.27;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2.61313}
+    .str0 {stroke:#E330CE;stroke-width:4.18;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2.61313}
+    .fil0 {fill:black;fill-rule:nonzero}
+    .fil1 {fill:#E6E6E6;fill-rule:nonzero}
+    .fil2 {fill:white;fill-rule:nonzero}
+
+
 /* Container table styles */
 #space-list-table {
   width: 100%;
@@ -374,10 +382,35 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- Author Area Start Here -->
         <section class="author-page-wrap padding-top-80 padding-bottom-50">
             <div class="container">
                 <div class="row gutters-60">
+
+
+
 
                     <div class="col-lg-8">
                         <div class="author-box-layout1">
@@ -406,6 +439,32 @@
                             </div>
 
 
+
+                            <div class="widget-follow-us">
+                                <ul>
+                                    <li class="single-item">
+                                        <a href="#" id="openJoinSpaceModal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xodm="http://www.corel.com/coreldraw/odm/2003" 
+                                            xml:space="preserve" width="0.174044in" height="0.174202in" version="1.1" 
+                                            style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" 
+                                            viewBox="0 0 146.52 146.65">
+                                                <g id="Layer_x0020_1">
+                                                <metadata id="CorelCorpID_0Corel-Layer"/>
+                                                <g id="_1938858166032">
+                                                <path class="fil0 str0" d="M38.43 135.22c-17.11,-9.69 -28.33,-23.93 -33.57,-42.88 -5.25,-18.95 -3.04,-36.8 6.57,-53.77 9.84,-17.38 24.1,-28.6 42.82,-33.78 18.74,-5.19 36.73,-2.89 54.11,6.96 17.24,9.76 28.32,23.93 33.42,42.8 5.11,18.88 2.83,36.86 -6.86,53.97 -9.61,16.97 -23.78,28.04 -42.73,33.29 -18.95,5.25 -36.79,3.03 -53.75,-6.57z"/>
+                                                <path class="fil1" d="M45.72 122.27c-13.53,-7.66 -22.4,-18.92 -26.54,-33.91 -4.15,-14.99 -2.41,-29.1 5.19,-42.52 7.79,-13.75 19.06,-22.62 33.86,-26.72 14.82,-4.1 29.04,-2.28 42.79,5.5 13.63,7.72 22.39,18.92 26.43,33.84 4.04,14.93 2.24,29.15 -5.43,42.67 -7.6,13.42 -18.8,22.17 -33.79,26.32 -14.98,4.15 -29.1,2.4 -42.51,-5.2z"/>
+                                                <path class="fil2 str0" d="M45.72 122.27c-13.53,-7.66 -22.4,-18.92 -26.54,-33.91 -4.15,-14.99 -2.41,-29.1 5.19,-42.52 7.79,-13.75 19.06,-22.62 33.86,-26.72 14.82,-4.1 29.04,-2.28 42.79,5.5 13.63,7.72 22.39,18.92 26.43,33.84 4.04,14.93 2.24,29.15 -5.43,42.67 -7.6,13.42 -18.8,22.17 -33.79,26.32 -14.98,4.15 -29.1,2.4 -42.51,-5.2z"/>
+                                                <path class="fil0 str0" d="M54.43 106.81c-9.25,-5.24 -15.31,-12.93 -18.14,-23.18 -2.84,-10.24 -1.64,-19.89 3.55,-29.06 5.32,-9.4 13.02,-15.46 23.14,-18.26 10.13,-2.8 19.85,-1.56 29.25,3.76 9.32,5.28 15.31,12.93 18.06,23.13 2.76,10.2 1.53,19.92 -3.71,29.17 -5.19,9.17 -12.85,15.15 -23.1,17.99 -10.24,2.84 -19.89,1.64 -29.05,-3.55z"/>
+                                                <path class="fil2 str0" d="M61.97 93.43c-5.54,-3.14 -9.18,-7.75 -10.88,-13.89 -1.7,-6.14 -0.99,-11.92 2.13,-17.42 3.19,-5.63 7.81,-9.27 13.88,-10.95 6.07,-1.68 11.9,-0.94 17.53,2.25 5.59,3.16 9.18,7.75 10.83,13.87 1.66,6.12 0.92,11.94 -2.22,17.49 -3.11,5.5 -7.71,9.09 -13.85,10.79 -6.14,1.7 -11.92,0.98 -17.42,-2.13z"/>
+                                                <path class="fil0 str1" d="M68.32 82.14c-2.42,-1.37 -4.01,-3.39 -4.75,-6.07 -0.74,-2.68 -0.43,-5.21 0.93,-7.61 1.39,-2.46 3.41,-4.05 6.06,-4.78 2.65,-0.73 5.19,-0.41 7.65,0.98 2.44,1.38 4.01,3.38 4.73,6.05 0.72,2.67 0.4,5.21 -0.97,7.63 -1.36,2.4 -3.36,3.97 -6.04,4.71 -2.68,0.74 -5.2,0.43 -7.6,-0.93z"/>
+                                                </g>
+                                                </g>
+                                            </svg> <i class=""></i>  JOIN A NEW SPACE
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
                             <!-- <ul class="pagination-layout1">
                                 <li class="active">
                                     <a href="#">1</a>
@@ -423,6 +482,9 @@
 
                         </div>
                     </div>
+
+
+
 
                     <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
 
@@ -495,10 +557,34 @@
 
                     </div>
 
+
+
                 </div>
             </div>
         </section>
         <!-- Author Area End Here -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -521,14 +607,6 @@
         <!-- Footer Area End Here -->
 
     </div>
-
-
-
-
-
-
-
-
 
 
 
