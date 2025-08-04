@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <th>
             <div class="author-personal-info">
               <a href="#" class="item-figure">
-                <img src="images/members/02.JPG" alt="group-selfie" style="width: 100px; height: 100px;">
+                <img src="images/icn.png" alt="group-selfie" style="width: 100px; height: 100px;">
               </a>
               <div class="item-content">
                 <div class="item-title">
