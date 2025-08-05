@@ -19,13 +19,18 @@ const spaceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   }],
+  admins: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
+  joinRequests: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
-
-
-// This code defines a Mongoose schema for a Space model with fields for name, description, members, admins, and createdAt.
 
 export default mongoose.model("Space", spaceSchema);

@@ -85,70 +85,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //=================== Create Space Modal ================================
 
-  const openModalBtn = document.getElementById("openCreateSpace");
-  const modal = document.getElementById("createSpaceModal");
-  const closeModalBtn = document.getElementById("closeModal");
-  const form = document.getElementById("createSpaceForm");
+// Use safer class toggle instead of raw style manipulation
+const openModalBtn = document.getElementById("openCreateSpace");
+const createSpaceModal = document.getElementById("createSpaceModal");
+const closeModalBtn = document.getElementById("closeModal");
+const form = document.getElementById("createSpaceForm");
 
-  openModalBtn.addEventListener("click", () => {
-    modal.style.display = "flex";
-  });
+openModalBtn?.addEventListener("click", () => {
+  createSpaceModal?.classList.remove("hidden");
+});
 
-  closeModalBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
+closeModalBtn?.addEventListener("click", () => {
+  createSpaceModal?.classList.add("hidden");
+});
 
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
+// Optional: Click outside modal closes it
+window.addEventListener("click", (e) => {
+  if (e.target === createSpaceModal) {
+    createSpaceModal.classList.add("hidden");
+  }
+});
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+form?.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
+  const name = document.getElementById("spaceName").value.trim();
+  const description = document.getElementById("spaceDesc").value.trim();
+  const token = localStorage.getItem("token");
 
-//====================== Create Space Function ===================================
+  try {
+    const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name, description }),
+    });
 
-    const name = document.getElementById("spaceName").value.trim();
-    const description = document.getElementById("spaceDesc").value.trim();
-    const token = localStorage.getItem("token");
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Failed to create space");
 
-    try {
-      const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({ name, description }),
-      });
+    alert("Space created successfully! 🎉");
+    createSpaceModal.classList.add("hidden");
+    form.reset();
 
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.message || "Failed to create space");
-
-      alert("Space created successfully! 🎉");
-      modal.style.display = "none";
-      form.reset();
-
-      // Optionally reload space list:
-      loadSpaces?.();
-
-    } catch (err) {
-      alert(err.message);
-    }
-  });
+    loadSpaces?.(); // reload list if method exists
+  } catch (err) {
+    alert(err.message);
+  }
+});
 
 
 //======================== Join a Space Modal ===========================
 
-// Modal Elements
 const joinModal = document.getElementById("joinSpaceModal");
 const closeJoinBtn = document.getElementById("closeJoinSpaceModal");
 const joinSpaceList = document.getElementById("joinSpaceList");
-
-
 
 // Attach listener to ANY button or anchor that should open the modal
 document.querySelectorAll(".openJoinSpaceModal").forEach((btn) => {
@@ -186,9 +179,6 @@ document.querySelectorAll(".openJoinSpaceModal").forEach((btn) => {
         joinSpaceList.appendChild(card);
       });
 
-
-
-
       // Attach join logic to each "Join" button
       joinSpaceList.querySelectorAll("button").forEach((btn) => {
         btn.addEventListener("click", async () => {
@@ -202,6 +192,8 @@ document.querySelectorAll(".openJoinSpaceModal").forEach((btn) => {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
               },
             });
+
+            showRequestSentModal();
 
             const result = await res.json();
 
@@ -217,7 +209,6 @@ document.querySelectorAll(".openJoinSpaceModal").forEach((btn) => {
           }
         });
       });
-
     } catch (err) {
       console.error("Error loading spaces:", err);
       joinSpaceList.innerHTML = `<p>Error fetching spaces</p>`;
@@ -225,15 +216,71 @@ document.querySelectorAll(".openJoinSpaceModal").forEach((btn) => {
   });
 });
 
-
-
-
-// Close modal
-closeJoinBtn.addEventListener("click", () => {
+closeJoinBtn?.addEventListener("click", () => {
   joinModal.classList.add("hidden");
 });
 
 
+
+
+
+//=================== Pending Requests Modal ===========================
+
+
+
+const viewReqBtn = document.getElementById("view-requests-btn");
+
+viewReqBtn?.addEventListener("click", async () => {
+  const currentSpaceId = localStorage.getItem("currentSpaceId"); //  Get from storage or your app state
+
+  if (!currentSpaceId) {
+    alert("No space selected.");
+    return;
+  }
+
+  await showPendingRequestsModal(currentSpaceId);
+});
+
+async function showPendingRequestsModal(spaceId) {
+  try {
+    const res = await fetch(`/api/spaces/${spaceId}/requests`);
+    if (!res.ok) throw new Error("Failed to fetch pending requests");
+
+    const requests = await res.json();
+
+    const listContainer = document.getElementById("pending-requests-list");
+    listContainer.innerHTML = ""; // Clear previous list
+
+    if (requests.length === 0) {
+      listContainer.innerHTML = `<li>No pending requests</li>`;
+    } else {
+      requests.forEach((user) => {
+        const li = document.createElement("li");
+        li.textContent = `${user.fullName || user.username || user.userId}`;
+        listContainer.appendChild(li);
+      });
+    }
+
+    document.getElementById("modal-pending-requests")?.classList.remove("hidden");
+
+  } catch (err) {
+    console.error(err);
+    alert("Could not load pending requests.");
+  }
+}
+
+// Close logic already exists:
+document.getElementById("close-pending-requests")?.addEventListener("click", () => {
+  document.getElementById("modal-pending-requests")?.classList.add("hidden");
+});
+
+
+
+//================== Request Approved Modal (Triggered externally) ==================
+
+
+
+// openModal("requestApprovedModal");
 
 
 

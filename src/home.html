@@ -29,244 +29,12 @@
 
     <!-- Custom Css -->
     <link rel="stylesheet" href="css/style-2.css">
+    <link rel="stylesheet" href="css/style-3.css">
     <!-- Modernizr Js -->
     <script src="js/modernizr-3.6.0.min.js"></script>
 
-<style>
+    
 
- /* Custom svg for inner circle style */
-    .str1 {stroke:#E330CE;stroke-width:6.27;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2.61313}
-    .str0 {stroke:#E330CE;stroke-width:4.18;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2.61313}
-    .fil0 {fill:black;fill-rule:nonzero}
-    .fil1 {fill:#E6E6E6;fill-rule:nonzero}
-    .fil2 {fill:white;fill-rule:nonzero}
-
-
-/* Container table styles */
-#space-list-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-/* Mobile menu toggle for responsiveness */
-
-
-/* Hamburger icon */
-.mobile-menu-toggle {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10001;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-
-	/* Mobile menu styles */
-        .mobile-menu {
-        position: fixed;
-        top: 0;
-        right: -260px; /* hidden by default */
-        height: 100vh;
-        width: 260px;
-        background-color: #2f0526;
-        z-index: 10002;
-        transition: right 0.3s ease;
-        box-shadow: -2px 0 8px rgba(0,0,0,0.2);
-        padding: 1rem;
-        }
-
-        .mobile-menu.menu-visible {
-        right: 0;
-        }
-
-
-
-	.mobile-menu-header {
-	display: flex;
-	justify-content: flex-end;
-	}
-
-	.mobile-menu-list {
-	list-style: none;
-	padding: 1rem 0;
-	}
-
-	.mobile-menu-list li {
-	padding: 0.75rem 0;
-	border-bottom: 1px solid #e642ca;
-	}
-
-	.mobile-menu-list a {
-	text-decoration: none;
-	color: #ffffff;
-	font-size: 1rem;
-	}
-
-	/* Backdrop */
-	.menu-backdrop {
-	position: fixed;
-	inset: 0;
-	background-color: rgba(0,0,0,0.4);
-	z-index: 10001;
-	}
-
-	.hidden {
-	display: none;
-	}
-/* Header */
-	.header {
-		background: #000000;
-		z-index: 9999;
-	}
-
-/* end of script */
-
-
-
-
-/* Table cells */
-#space-list-table td, 
-#space-list-table th {
-  padding: 14px 20px;
-  vertical-align: top;
-  border-bottom: 1px solid #ddd;
-}
-
-/* Modals */
-
-.modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  z-index: 999;
-  left: 0; top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-}
-
-.modal.hidden {
-  display: none;
-}
-
-.modal-overlay {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(4px);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: #fff;
-  color: #333;
-  padding: 2rem;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-}
-
-.modal-content h2 {
-  margin-top: 0;
-  font-weight: 600;
-  color: #4a4a4a;
-  margin-bottom: 1rem;
-}
-
-.modal-content label {
-  display: block;
-  margin: 10px 0 5px;
-  font-weight: 500;
-}
-
-.modal-content input,
-.modal-content textarea {
-  width: 100%;
-  padding: 10px;
-  /* border-radius: 8px; */
-  border: 1px solid #ee2fd1;
-  font-size: 1rem;
-  outline: none;
-}
-
-.modal-content textarea {
-  resize: vertical;
-  height: 80px;
-}
-
-.create-btn {
-  background-color: #e02edd;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin-top: 1rem;
-  /* border-radius: 8px; */
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.create-btn:hover {
-  background-color: #820d68;
-}
-
-.close-btn {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  font-size: 20px;
-  cursor: pointer;
-  color: #777;
-}
-
-.close-btn:hover {
-  color: #333;
-}
-
-.space-list-container .space-card {
-  padding: 12px 18px;
-  margin: 12px 0;
-  background-color: #f3f3f3;
-  /* border-radius: 10px; */
-  box-shadow: 0 0 5px #ccc;
-}
-
-.space-card h3 {
-  margin: 0 0 6px;
-  font-size: 18px;
-  color: #333;
-}
-
-.space-card p {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
-}
-
-.space-card button {
-  margin-top: 10px;
-  background-color: #e02edd;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  /* border-radius: 6px; */
-  cursor: pointer;
-}
-
-
-</style>
 
 </head>
 
@@ -722,6 +490,9 @@
     <!-- Create Space modal End Here -->
 
 
+
+
+
     <!-- Join Space modal Starts Here -->
         <div id="joinSpaceModal" class="modal hidden">
             <div class="modal-content">
@@ -735,6 +506,51 @@
             </div>
         </div>
     <!-- Join Space modal End Here -->
+
+
+
+    
+     <!-- Request Sent Confirmation Modal -->
+        <div id="modal-request-sent" class="modal-request-sent hidden">
+        <div class="modal-content-request-sent">
+            <h2>Request Sent</h2>
+            <p>Your request to join this Space has been sent. You’ll be notified once approved.</p>
+            <button class="close-btn" data-close="modal-request-sent">Close</button>
+
+        </div>
+        </div>
+    <!-- Request Sent Confirmation Modal End Here -->
+
+
+    <!-- Pending Requests Modal -->
+        <div id="modal-pending-requests" class="modal-pending-requests hidden">
+            <div class="modal-content-pending">
+                <h2>Pending Join Requests</h2>
+                <ul id="pending-requests-list" class="requests-list">
+    <!-- Dynamic list of users will load here -->
+                </ul>
+                <button id="close-pending-requests">Close</button>
+            </div>
+        </div>
+    <!-- Pending Requests Modal End Here-->
+
+
+    <!-- RequestApproved modal -->
+     <div id="requestApprovedModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" data-close="requestApprovedModal">&times;</span>
+            <h2>Request Approved</h2>
+            <p>You’ve been added to the Space. Happy chatting!</p>
+            <button id="goToSpaceBtn">Enter Space</button>
+        </div>
+    </div>
+    <!-- RequestApproved modal End Here -->
+
+
+
+
+
+
 
 
     <!-- Preloader Js -->
@@ -762,30 +578,9 @@
     <script src="js/main.js"></script> -->
     
     <script src="js/home.js"></script>
+    <script src="js/modals-logic.js"></script>
 
-    <script>
-        const mobileMenuBtn = document.getElementById("mobileMenuToggle");
-        const mobileMenu = document.getElementById("mobileMenu");
-        const closeMobileMenu = document.getElementById("mobileMenuClose");
-        const mobileBackdrop = document.getElementById("mobileMenuBackdrop");
-
-        mobileMenuBtn.addEventListener("click", () => {
-        mobileMenu.classList.add("menu-visible");
-        mobileBackdrop.classList.remove("hidden");
-        });
-
-        closeMobileMenu.addEventListener("click", () => {
-        mobileMenu.classList.remove("menu-visible");
-        mobileBackdrop.classList.add("hidden");
-        });
-
-        mobileBackdrop.addEventListener("click", () => {
-        mobileMenu.classList.remove("menu-visible");
-        mobileBackdrop.classList.add("hidden");
-        });
-
-    </script>
-
+    
 
 </body>
 
