@@ -20,9 +20,6 @@ const bubbleSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  expiresAt: {
-    type: Date
-  }
 }, { timestamps: true });
 
 const Bubble = mongoose.model("Bubble", bubbleSchema);
