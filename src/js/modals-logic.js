@@ -49,7 +49,7 @@ document.querySelectorAll('.close-btn').forEach(btn => {
 // ------------------- Request Sent Modal ------------------- //
 
 function showRequestSentModal() {
-  openModal("modal-request-sent"); // replaced manual class toggling with reusable openModal()
+  openModal("modal-request-sent"); 
 }
 
 // ------------------- Pending Requests Modal ------------------- //

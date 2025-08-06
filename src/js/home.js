@@ -85,56 +85,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //=================== Create Space Modal ================================
 
-// Use safer class toggle instead of raw style manipulation
-const openModalBtn = document.getElementById("openCreateSpace");
-const createSpaceModal = document.getElementById("createSpaceModal");
-const closeModalBtn = document.getElementById("closeModal");
-const form = document.getElementById("createSpaceForm");
+      // Elements for Create Space Modal
+      const createModal = document.getElementById('createSpaceModal');
+      const openCreateBtn = document.getElementById('openCreateModal'); // Button to trigger modal (you'll need this in your HTML)
+      const closeCreateBtn = document.getElementById('closeCreateModal');
+      const createForm = document.getElementById('createSpaceForm');
 
-openModalBtn?.addEventListener("click", () => {
-  createSpaceModal?.classList.remove("hidden");
-});
+      // Open modal handler
+      if (openCreateBtn) {
+        openCreateBtn.addEventListener('click', () => {
+          createModal.classList.remove('hidden'); // Show modal
+        });
+      }
 
-closeModalBtn?.addEventListener("click", () => {
-  createSpaceModal?.classList.add("hidden");
-});
+      // Close modal handler
+      closeCreateBtn.addEventListener('click', () => {
+        createModal.classList.add('hidden'); // Hide modal
+      });
 
-// Optional: Click outside modal closes it
-window.addEventListener("click", (e) => {
-  if (e.target === createSpaceModal) {
-    createSpaceModal.classList.add("hidden");
-  }
-});
+      // Optional: Close when clicking outside modal content
+      createModal.addEventListener('click', (e) => {
+        if (e.target === createModal) {
+          createModal.classList.add('hidden');
+        }
+      });
 
-form?.addEventListener("submit", async (e) => {
-  e.preventDefault();
+      // Form submission
+      createForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-  const name = document.getElementById("spaceName").value.trim();
-  const description = document.getElementById("spaceDesc").value.trim();
-  const token = localStorage.getItem("token");
+        const name = document.getElementById('spaceName').value.trim();
+        const desc = document.getElementById('spaceDesc').value.trim();
 
-  try {
-    const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-      body: JSON.stringify({ name, description }),
-    });
+        // TODO: Replace this with your backend call
+        try {
+          const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/create", {
+            method: 'POST',
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({ name, description: desc })
+          });
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || "Failed to create space");
+          if (!res.ok) throw new Error('Failed to create space.');
 
-    alert("Space created successfully! 🎉");
-    createSpaceModal.classList.add("hidden");
-    form.reset();
+          // Success! Close modal and optionally refresh space list
+          createModal.classList.add('hidden');
+          createForm.reset();
+          alert('Space created successfully!'); // Replace this with custom toast/modal
+        } catch (err) {
+          console.error(err);
+          alert('Error: ' + err.message);
+        }
+      });
 
-    loadSpaces?.(); // reload list if method exists
-  } catch (err) {
-    alert(err.message);
-  }
-});
 
 
 //======================== Join a Space Modal ===========================
