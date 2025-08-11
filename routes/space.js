@@ -109,6 +109,21 @@ router.get("/all", verifyToken, async (req, res) => {
 
 
 
+/**
+ * @route   GET /space/user-admin
+ * @desc    Get all Spaces the user is an admin of
+ * @access  Private
+ */
+
+
+router.get("/user-admin", verifyToken, async (req, res) => {
+  try {
+    const spaces = await Space.find({ admins: req.user.id }).sort({ createdAt: -1 });
+    res.status(200).json(spaces);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to find any admined Spaces", error: err.message });
+  }
+});
 
 
 

@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
             </div>
           </th>
+
           <td>
             <div class="author-social-info">
               <ul>
@@ -57,12 +58,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     <span class="item-number">${space.members.length}</span>
                   </div>
                 </li>
+
                 <li>
                   <div>
                     <h4 class="item-title">Pins</h4>
                     <span class="item-number">${pinsCount}</span>
                   </div>
                 </li>
+
                 <li>
                   <div>
                     <h4 class="item-title">Bubbles</h4>
@@ -142,142 +145,198 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-//======================== Join a Space Modal ===========================
 
-const joinModal = document.getElementById("joinSpaceModal");
-const closeJoinBtn = document.getElementById("closeJoinSpaceModal");
-const joinSpaceList = document.getElementById("joinSpaceList");
+//================================= Join a Space Modal ===================================
 
-// Attach listener to ANY button or anchor that should open the modal
-document.querySelectorAll(".openJoinSpaceModal").forEach((btn) => {
-  btn.addEventListener("click", async (e) => {
-    e.preventDefault();
 
-    joinModal.classList.remove("hidden");
-    joinSpaceList.innerHTML = `<p class="loading-text">Loading spaces...</p>`;
+          const joinModal = document.getElementById("joinSpaceModal");
+          const closeJoinBtn = document.getElementById("closeJoinSpaceModal");
+          const joinSpaceList = document.getElementById("joinSpaceList");
 
-    try {
-      const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/all", {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+          // Attach listener to ALL buttons that open the Join modal
 
-      const spaces = await res.json();
-      joinSpaceList.innerHTML = ""; // Clear loading state
+          document.querySelectorAll(".openJoinSpaceModal").forEach((btn) => {
+            btn.addEventListener("click", async (e) => {
+              e.preventDefault();
 
-      if (!spaces.length) {
-        joinSpaceList.innerHTML = `<p>No public spaces found.</p>`;
-        return;
-      }
 
-      spaces.forEach((space) => {
-        const card = document.createElement("div");
-        card.className = "space-card";
-        card.innerHTML = `
-          <h3>${space.name}</h3>
-          <p>${space.description || "No description"}</p>
-          <p><strong>Created by:</strong> ${space.createdBy?.name || "Unknown"}</p>
-          <button data-id="${space._id}">Join</button>
-        `;
-        joinSpaceList.appendChild(card);
-      });
+              joinModal.classList.remove("hidden");
+              joinSpaceList.innerHTML = `<p class="loading-text">Loading spaces...</p>`;
 
-      // Attach join logic to each "Join" button
-      joinSpaceList.querySelectorAll("button").forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const spaceId = btn.getAttribute("data-id");
 
-          try {
-            const res = await fetch(`https://the-inner-circle-rad8.onrender.com/spaces/join/${spaceId}`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-              },
+
+              try {
+                const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/all", {
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                  },
+                });
+
+                const spaces = await res.json();
+
+                joinSpaceList.innerHTML = ""; // Clear loading state
+
+                if (!spaces.length) {
+                  joinSpaceList.innerHTML = `<p>No public spaces found.</p>`;
+                  return;
+                }
+
+
+
+                spaces.forEach((space) => {
+                  const card = document.createElement("div");
+                  card.className = "space-card";
+                  card.innerHTML = `
+                    <h3>${space.name}</h3>
+                    <p>${space.description || "No description"}</p>
+                    <p><strong>Created by:</strong> ${space.createdBy?.name || "Unknown"}</p>
+                    <button data-id="${space._id}" class="join-btn">Request to Join</button>
+                  `;
+
+
+                  joinSpaceList.appendChild(card);
+
+                });
+
+
+
+
+                //  Join logic
+
+                joinSpaceList.querySelectorAll(".join-btn").forEach((btn) => {
+                  btn.addEventListener("click", async () => {
+                    const spaceId = btn.getAttribute("data-id");
+                    btn.disabled = true;
+                    btn.textContent = "Requesting...";
+
+                    try {
+                      const res = await fetch(`https://the-inner-circle-rad8.onrender.com/spaces/${spaceId}/request-join`, {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                          "Authorization": `Bearer ${localStorage.getItem("token")}`
+                        },
+                      });
+
+                      const result = await res.json();
+
+                      if (res.ok) {
+                        showRequestSentModal();
+
+                        console.log("Join request sent successfully:", result);
+
+                        joinModal.classList.add("hidden");
+
+                      } else {
+                        alert(result.message || "Could not send join request.");
+                      }
+                    } catch (err) {
+                      console.error("Join request failed:", err);
+                      alert("Something went wrong. Try again.");
+                    } finally {
+                      btn.disabled = false;
+                      btn.textContent = "Request to Join";
+                    }
+                  });
+                });
+              } catch (err) {
+                console.error("Error loading spaces:", err);
+                joinSpaceList.innerHTML = `<p>Error fetching spaces</p>`;
+              }
             });
+          });
 
-            showRequestSentModal();
-
-            const result = await res.json();
-
-            if (res.ok) {
-              alert(`Joined space: ${result.space.name}`);
-              joinModal.classList.add("hidden");
-            } else {
-              alert(result.message || "Could not join space");
-            }
-          } catch (err) {
-            console.error("Join failed:", err);
-            alert("Something went wrong");
-          }
-        });
-      });
-    } catch (err) {
-      console.error("Error loading spaces:", err);
-      joinSpaceList.innerHTML = `<p>Error fetching spaces</p>`;
-    }
-  });
-});
-
-closeJoinBtn?.addEventListener("click", () => {
-  joinModal.classList.add("hidden");
-});
+          closeJoinBtn?.addEventListener("click", () => {
+            joinModal.classList.add("hidden");
+          });
 
 
 
 
 
-//=================== Pending Requests Modal ===========================
 
 
 
-const viewReqBtn = document.getElementById("view-requests-btn");
 
-viewReqBtn?.addEventListener("click", async () => {
-  const currentSpaceId = localStorage.getItem("currentSpaceId"); //  Get from storage or your app state
+//=================== Pending Requests Modal Logic ===========================
 
-  if (!currentSpaceId) {
-    alert("No space selected.");
-    return;
-  }
 
-  await showPendingRequestsModal(currentSpaceId);
-});
 
-async function showPendingRequestsModal(spaceId) {
+
+  document.getElementById("openRequestsModalBtn").addEventListener("click", async () => {
+  
+  
+    const modal = document.getElementById("pendingRequestsModal");
+    const container = document.getElementById("adminSpacesList");
+    container.innerHTML = "<p>Loading requests...</p>";
+    modal.style.display = "block";
+
+
   try {
-    const res = await fetch(`/api/spaces/${spaceId}/requests`);
-    if (!res.ok) throw new Error("Failed to fetch pending requests");
+    const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/user-admin");
+    const data = await res.json();
 
-    const requests = await res.json();
 
-    const listContainer = document.getElementById("pending-requests-list");
-    listContainer.innerHTML = ""; // Clear previous list
-
-    if (requests.length === 0) {
-      listContainer.innerHTML = `<li>No pending requests</li>`;
-    } else {
-      requests.forEach((user) => {
-        const li = document.createElement("li");
-        li.textContent = `${user.fullName || user.username || user.userId}`;
-        listContainer.appendChild(li);
-      });
+    if (!data.length) {
+      container.innerHTML = "<p>No pending requests found.</p>";
+      return;
     }
 
-    document.getElementById("modal-pending-requests")?.classList.remove("hidden");
+    // Render each space and its join requests
+
+    container.innerHTML = data.map(space => `
+      <div class="space-requests">
+        <h3>${space.name} (${space.pendingRequests.length} pending)</h3>
+
+        <ul>
+          ${space.pendingRequests.map(user => `
+            <li id="user-${user.userId}-${space.id}">
+              ${user.name}
+              <button onclick="handleRequest('${space.id}', '${user.userId}', true)">✅</button>
+              <button onclick="handleRequest('${space.id}', '${user.userId}', false)">❌</button>
+            </li>
+          `).join('')}
+        </ul>
+
+      </div>
+    `).join('');
+
 
   } catch (err) {
+    container.innerHTML = "<p>Something went wrong fetching requests.</p>";
     console.error(err);
-    alert("Could not load pending requests.");
+  }
+});
+
+
+// Handle approval/rejection
+async function handleRequest(spaceId, userId, approve) {
+  const action = approve ? "approve" : "reject";
+
+  try {
+    const res = await fetch(`/api/spaces/${spaceId}/requests/${userId}/${action}`, {
+      method: "POST"
+    });
+
+
+
+    if (res.ok) {
+      document.getElementById(`user-${userId}-${spaceId}`).remove();
+    } else {
+      alert("Failed to process request.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Error handling request.");
   }
 }
 
-// Close logic already exists:
-document.getElementById("close-pending-requests")?.addEventListener("click", () => {
-  document.getElementById("modal-pending-requests")?.classList.add("hidden");
+// Close modal
+document.getElementById("closePendingRequestsModal").addEventListener("click", () => {
+  document.getElementById("pendingRequestsModal").style.display = "none";
 });
+
 
 
 

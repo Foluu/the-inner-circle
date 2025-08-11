@@ -371,13 +371,12 @@
 
                         <div class="widget">
                             <div class="section-heading heading-dark">
-                                <h3 class="item-heading">SUBSCRIBE &amp; FOLLOW</h3>
+                                <h3 class="item-heading">JOIN REQUESTS</h3>
                             </div>
 
                             <div class="widget-follow-us">
                                 <ul>
-                                    <li class="single-item"><a href="#"><i class="fab fa-twitter"></i>FOLLOW US</a></li>
-                                    <li class="single-item"><a href="#"><i class="fab fa-instagram"></i>FOLLOW US</a></li>
+                                    <li class="single-item"><a href="#" id="openRequestsModalBtn"><i class="fas fa-rocket"></i>View Join Requests</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -512,27 +511,32 @@
      <!-- Request Sent Confirmation Modal -->
         <div id="modal-request-sent" class="modal-request-sent hidden">
         <div class="modal-content-request-sent">
+            <span class="close-btn" data-close="modal-request-sent">&times;</span>
             <h2>Request Sent</h2>
             <p>Your request to join this Space has been sent. You’ll be notified once approved.</p>
-            <button class="close-btn" data-close="modal-request-sent">Close</button>
-
         </div>
         </div>
     <!-- Request Sent Confirmation Modal End Here -->
 
 
-    <!-- Pending Requests Modal -->
-        <div id="modal-pending-requests" class="modal-pending-requests hidden">
-            <div class="modal-content-pending">
-                <h2>Pending Join Requests</h2>
-                <ul id="pending-requests-list" class="requests-list">
-    <!-- Dynamic list of users will load here -->
-                </ul>
-                <button id="close-pending-requests">Close</button>
-            </div>
-        </div>
-    <!-- Pending Requests Modal End Here-->
 
+
+
+
+        <!-- Pending Requests Modal -->
+            <div id="pendingRequestsModal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span id="closePendingRequestsModal" class="close">&times;</span>
+                    <h2>Pending Join Requests</h2>
+        <!-- Dynamic list of users will load inside here shaa--> 
+                    <div id="adminSpacesList"></div>
+                </div>
+            </div>
+        <!-- Pending Requests Modal End Here-->
+
+
+
+    
 
     <!-- RequestApproved modal -->
      <div id="requestApprovedModal" class="modal hidden">
@@ -544,6 +548,12 @@
         </div>
     </div>
     <!-- RequestApproved modal End Here -->
+
+
+
+
+
+
 
 
 
@@ -577,7 +587,7 @@
     <script src="js/main.js"></script> -->
     
     <script src="js/home.js"></script>
-    <!-- <script src="js/modals-logic.js"></script> -->
+    <script src="js/modals-logic.js"></script>
 
     
 

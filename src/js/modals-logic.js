@@ -46,11 +46,23 @@ document.querySelectorAll('.close-btn').forEach(btn => {
   });
 });
 
-// ------------------- Request Sent Modal ------------------- //
 
-function showRequestSentModal() {
-  openModal("modal-request-sent"); 
-}
+
+ // ------------------- Request Sent Modal ------------------- //
+
+    const requestSentModal = document.getElementById("modal-request-sent");
+
+    function showRequestSentModal() {
+      openModal("modal-request-sent");
+
+      // Add event listener to close modal when clicking outside
+      requestSentModal.addEventListener('click', (e) => {
+        if (e.target === requestSentModal) {
+          requestSentModal.classList.add('hidden');
+        }
+      });
+    }
+
 
 // ------------------- Pending Requests Modal ------------------- //
 
