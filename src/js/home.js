@@ -261,21 +261,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //=================== Pending Requests Modal Logic ===========================
 
+document.getElementById("openRequestsModalBtn").addEventListener("click", async (e) => {
+  e.preventDefault();
 
 
 
-  document.getElementById("openRequestsModalBtn").addEventListener("click", async () => {
-  
-  
-    const modal = document.getElementById("pendingRequestsModal");
-    const container = document.getElementById("adminSpacesList");
-    container.innerHTML = "<p>Loading requests...</p>";
-    modal.style.display = "block";
+  const modal = document.getElementById("pendingRequestsModal");
+  const container = document.getElementById("adminSpacesList");
+  container.innerHTML = "<p>Loading requests...</p>";
+  modal.style.display = "flex"; // flex for centering
 
 
   try {
-    const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/user-admin");
+    const token = localStorage.getItem("token"); // or wherever you store auth token
+    const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/user-admin", {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
     const data = await res.json();
+
+    
 
 
     if (!data.length) {
@@ -283,46 +290,51 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Render each space and its join requests
+    console.log("Pending Requests Data:", data);
 
+    // Render spaces & requests
     container.innerHTML = data.map(space => `
       <div class="space-requests">
-        <h3>${space.name} (${space.pendingRequests.length} pending)</h3>
-
-        <ul>
-          ${space.pendingRequests.map(user => `
-            <li id="user-${user.userId}-${space.id}">
-              ${user.name}
-              <button onclick="handleRequest('${space.id}', '${user.userId}', true)">✅</button>
-              <button onclick="handleRequest('${space.id}', '${user.userId}', false)">❌</button>
+        <h3>${space.name} (${space.joinRequests.length} pending)</h3>
+        <ul class="requests-list">
+          ${space.joinRequests.map(user => `
+            <li id="user-${user._id}-${space._id}">
+              <span class="request-user">${user.name}</span>
+              <button class="approve-btn" onclick="handleRequest('${space._id}', '${user._id}', true)">✅</button>
+              <button class="reject-btn" onclick="handleRequest('${space._id}', '${user._id}', false)">❌</button>
             </li>
           `).join('')}
         </ul>
-
       </div>
     `).join('');
+
 
 
   } catch (err) {
     container.innerHTML = "<p>Something went wrong fetching requests.</p>";
     console.error(err);
   }
-});
 
+});
 
 // Handle approval/rejection
 async function handleRequest(spaceId, userId, approve) {
-  const action = approve ? "approve" : "reject";
+  const token = localStorage.getItem("token");
+  const endpoint = `https://the-inner-circle-rad8.onrender.com/spaces/${spaceId}/${approve ? "approve-request" : "reject-request"}/${userId}`;
 
   try {
-    const res = await fetch(`/api/spaces/${spaceId}/requests/${userId}/${action}`, {
-      method: "POST"
-    });
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
 
+    });
 
 
     if (res.ok) {
       document.getElementById(`user-${userId}-${spaceId}`).remove();
+
     } else {
       alert("Failed to process request.");
     }
@@ -334,20 +346,15 @@ async function handleRequest(spaceId, userId, approve) {
 
 // Close modal
 document.getElementById("closePendingRequestsModal").addEventListener("click", () => {
+
   document.getElementById("pendingRequestsModal").style.display = "none";
 });
 
 
 
 
+
 //================== Request Approved Modal (Triggered externally) ==================
-
-
-
-// openModal("requestApprovedModal");
-
-
-
 
 
 

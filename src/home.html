@@ -38,7 +38,15 @@
 
 </head>
 
+
+
+
+
 <body>
+    
+
+
+
     
     <!-- Inner Circle Codes Start here -->
 
@@ -233,9 +241,6 @@
             <div id="mobileMenuBackdrop" class="menu-backdrop hidden"></div>
 
         <!-- Header Area End Here -->
-
-
-
 
 
 
@@ -524,8 +529,8 @@
 
 
         <!-- Pending Requests Modal -->
-            <div id="pendingRequestsModal" class="modal" style="display:none;">
-                <div class="modal-content">
+            <div id="pendingRequestsModal" class="modal-pending-requests">
+                <div class="modal-content-pending">
                     <span id="closePendingRequestsModal" class="close">&times;</span>
                     <h2>Pending Join Requests</h2>
         <!-- Dynamic list of users will load inside here shaa--> 
@@ -533,6 +538,8 @@
                 </div>
             </div>
         <!-- Pending Requests Modal End Here-->
+
+      
 
 
 
@@ -564,14 +571,14 @@
 
     <!-- Preloader Js -->
     <script>
-    window.addEventListener("load", () => {
-        const preloader = document.getElementById("preloader");
-        preloader.classList.add("hide");
+        window.addEventListener("load", () => {
+            const preloader = document.getElementById("preloader");
+            preloader.classList.add("hide");
 
-        setTimeout(() => {
-        preloader.style.display = "none";
-        }, 700); // Match transition
-    });
+            setTimeout(() => {
+            preloader.style.display = "none";
+            }, 700); // Match transition
+        });
     </script>
     <!-- Jquery Js -->
     <script src="js/jquery-3.3.1.min.js"></script>

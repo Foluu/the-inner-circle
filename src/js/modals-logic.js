@@ -117,7 +117,7 @@ async function showPendingRequestsModal(spaceId) {
     list.innerHTML = `<li>Error loading requests.</li>`;
   }
 
-  openModal("modal-pending-requests"); // using reusable open function
+  openModal("modal-pending-requests");
 }
 
 // ------------------- Request Approved Modal ------------------- //

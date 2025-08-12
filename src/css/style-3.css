@@ -279,14 +279,14 @@
 }
 
 .modal-pending-requests {
+  display: none; /* hide on page load */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6); 
   z-index: 999;
-  display: flex;
   justify-content: center;
   align-items: center;
 }
