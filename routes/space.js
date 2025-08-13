@@ -170,6 +170,8 @@ router.post("/:spaceId/request-join", verifyToken, async (req, res) => {
  * @desc    Admin approves a user's request to join the space
  * @access  Private (admin only)
  */
+
+
 router.post("/:spaceId/approve-request/:userId", verifyToken, async (req, res) => {
   try {
     const { spaceId, userId } = req.params;
@@ -184,14 +186,14 @@ router.post("/:spaceId/approve-request/:userId", verifyToken, async (req, res) =
     }
 
     // Check if userId actually requested to join
-    if (!space.joinRequests.includes(userId)) {
-      return res.status(400).json({ message: "User has not requested to join." });
-    }
+    if (!space.joinRequests.map(id => id.toString()).includes(userId)) {
+        return res.status(400).json({ message: "User has not requested to join." });
+      }
 
-    // Add to members, remove from joinRequests
-    space.members.push(userId);
-    space.joinRequests = space.joinRequests.filter(id => id.toString() !== userId);
-    await space.save();
+      space.members.push(userId);
+      space.joinRequests = space.joinRequests.filter(id => id.toString() !== userId);
+      await space.save();
+
 
     res.status(200).json({ message: "User added to space." });
   } catch (err) {
@@ -213,12 +215,13 @@ router.post("/:spaceId/reject-request/:userId", verifyToken, async (req, res) =>
       return res.status(403).json({ message: "Only admins can reject join requests." });
     }
 
-    if (!space.joinRequests.includes(userId)) {
+    if (!space.joinRequests.map(id => id.toString()).includes(userId)) {
       return res.status(400).json({ message: "User has not requested to join." });
     }
 
     space.joinRequests = space.joinRequests.filter(id => id.toString() !== userId);
     await space.save();
+
 
     res.status(200).json({ message: "Join request rejected." });
   } catch (err) {

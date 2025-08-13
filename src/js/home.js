@@ -293,20 +293,41 @@ document.getElementById("openRequestsModalBtn").addEventListener("click", async 
     console.log("Pending Requests Data:", data);
 
     // Render spaces & requests
-    container.innerHTML = data.map(space => `
-      <div class="space-requests">
-        <h3>${space.name} (${space.joinRequests.length} pending)</h3>
-        <ul class="requests-list">
-          ${space.joinRequests.map(user => `
-            <li id="user-${user._id}-${space._id}">
-              <span class="request-user">${user.name}</span>
-              <button class="approve-btn" onclick="handleRequest('${space._id}', '${user._id}', true)">✅</button>
-              <button class="reject-btn" onclick="handleRequest('${space._id}', '${user._id}', false)">❌</button>
-            </li>
-          `).join('')}
-        </ul>
-      </div>
-    `).join('');
+        container.innerHTML = data.map(space => `
+        <div class="space-requests" data-space-id="${space._id}">
+          <h3>${space.name} (${space.joinRequests.length} pending)</h3>
+          <ul class="requests-list">
+            ${space.joinRequests.map(user => `
+              <li id="user-${user._id}-${space._id}" data-user-id="${user._id}">
+                <span class="request-user">${user.name}</span>
+                <button class="approve-btn">✅</button>
+                <button class="reject-btn">❌</button>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `).join('');
+
+
+
+      container.querySelectorAll('.approve-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const li = btn.closest('li');
+          const spaceId = btn.closest('.space-requests').dataset.spaceId;
+          const userId = li.dataset.userId;
+          handleRequest(spaceId, userId, true);
+        });
+      });
+
+      container.querySelectorAll('.reject-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const li = btn.closest('li');
+          const spaceId = btn.closest('.space-requests').dataset.spaceId;
+          const userId = li.dataset.userId;
+          handleRequest(spaceId, userId, false);
+        });
+      });
+
 
 
 
@@ -314,41 +335,61 @@ document.getElementById("openRequestsModalBtn").addEventListener("click", async 
     container.innerHTML = "<p>Something went wrong fetching requests.</p>";
     console.error(err);
   }
+  
 
 });
 
-// Handle approval/rejection
-async function handleRequest(spaceId, userId, approve) {
-  const token = localStorage.getItem("token");
-  const endpoint = `https://the-inner-circle-rad8.onrender.com/spaces/${spaceId}/${approve ? "approve-request" : "reject-request"}/${userId}`;
 
-  try {
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${token}`
+  // Handle approval/rejection
+
+      async function handleRequest(spaceId, userId, approve) {
+        const token = localStorage.getItem("token");
+        const endpoint = `https://the-inner-circle-rad8.onrender.com/spaces/${spaceId}/${approve ? "approve-request" : "reject-request"}/${userId}`;
+
+        try {
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+
+          });
+
+
+          if (res.ok) {
+            document.getElementById(`user-${userId}-${spaceId}`).remove();
+
+          } else {
+            alert("Failed to process request.");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Error handling request.");
+        }
       }
 
-    });
-
-
-    if (res.ok) {
-      document.getElementById(`user-${userId}-${spaceId}`).remove();
-
-    } else {
-      alert("Failed to process request.");
-    }
-  } catch (err) {
-    console.error(err);
-    alert("Error handling request.");
-  }
-}
+    
 
 // Close modal
 document.getElementById("closePendingRequestsModal").addEventListener("click", () => {
 
   document.getElementById("pendingRequestsModal").style.display = "none";
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -120,14 +120,6 @@ async function showPendingRequestsModal(spaceId) {
   openModal("modal-pending-requests");
 }
 
-// ------------------- Request Approved Modal ------------------- //
 
-// Button to enter approved space
-const goToSpaceBtn = document.getElementById("goToSpaceBtn");
-if (goToSpaceBtn) {
-  goToSpaceBtn.addEventListener("click", () => {
-    // Replace with actual space navigation logic
-    // window.location.href = `/space.html?id=${approvedSpaceId}`;
-    closeModal("modal-request-approved"); // Ensure correct modal ID used
-  });
-}
+
+// ------------------- Request Approved Modal ------------------- //
