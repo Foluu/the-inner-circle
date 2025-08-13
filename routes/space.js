@@ -118,7 +118,9 @@ router.get("/all", verifyToken, async (req, res) => {
 
 router.get("/user-admin", verifyToken, async (req, res) => {
   try {
-    const spaces = await Space.find({ admins: req.user.id }).sort({ createdAt: -1 });
+
+
+const spaces = await Space.find({ admins: req.user.id }).populate("joinRequests", "name _id").sort({ createdAt: -1 });
     res.status(200).json(spaces);
   } catch (err) {
     res.status(500).json({ message: "Failed to find any admined Spaces", error: err.message });
