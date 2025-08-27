@@ -30,6 +30,13 @@
     <!-- Modernizr Js -->
     <!-- <script src="js/modernizr-3.6.0.min.js"></script> -->
 
+    <!-- Emoji Mart Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.css">
+
+    <!-- Emoji Mart Script -->
+    <script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
+
+
     <!-- <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script> -->
 
           <style>
@@ -147,6 +154,20 @@
           padding: 0.2rem 0.5rem;
           color: black;
         }
+
+        #emoji-container {
+            position: absolute;
+            bottom: 110px;
+            left: 20px;  
+            width: 320px;
+            max-height: 400px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+          }
 
         /* Chat area */
         .chat-area {
@@ -475,7 +496,8 @@
 
         <button><i class="fas fa-plus"></i></button>
         <div></div>
-        <button><i class="fas fa-smile"></i></button><p> </p>
+        <button id="emoji-btn"><i class="fas fa-smile"></i></button>
+        <div id="emoji-container" class="hidden"></div><p> </p>
 
         <input type="text" id="bubbleInput" placeholder="Blow a bubble..." /><p> </p>
 

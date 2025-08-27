@@ -23,6 +23,25 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+
+
+
+// Initialize emoji picker
+
+const emojiBtn = document.getElementById("emoji-btn"); 
+const picker = new EmojiMart.Picker({
+  onEmojiSelect: (emoji) => {
+    bubbleInput.value += emoji.native; // Appends emoji to input
+  }
+});
+
+document.getElementById("emoji-btn").addEventListener("click", () => {
+  document.getElementById("emoji-container").classList.toggle("hidden");
+  document.getElementById("emoji-container").appendChild(picker);
+});
+
+
+
   // Load spaces and populate sidebar
 
 
@@ -96,20 +115,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // Render a single bubble in the UI
 
   function renderBubble(b) {
-    const bubbleEl = document.createElement("div");
-    bubbleEl.className = "bubble";
+  const safeContent = DOMPurify.sanitize(b.content);
+  const bubbleEl = document.createElement("div");
+  bubbleEl.className = "bubble";
 
-    bubbleEl.innerHTML = `
-      <div class="bubble-content">
-        <strong>${b.sender?.name || b.user || "Unknown"}</strong>
-        <p>${b.content}</p>
-       <span class="timestamp">${ new Date(b.createdAt || b.timestamp).toLocaleTimeString() }</span>
-      </div>
-    `;
+  bubbleEl.innerHTML = `
+    <div class="bubble-content">
+      <strong>${b.sender?.name || b.user || "Unknown"}</strong>
+      <p>${safeContent}</p>
+      <span class="timestamp">
+        ${new Date(b.createdAt || b.timestamp).toLocaleTimeString()}
+      </span>
+    </div>
+  `;
 
-    bubbleArea.appendChild(bubbleEl);
-    bubbleArea.scrollTop = bubbleArea.scrollHeight;
-  }
+  bubbleArea.appendChild(bubbleEl);
+  bubbleArea.scrollTop = bubbleArea.scrollHeight;
+}
 
 
   // Load all bubbles for a given space
