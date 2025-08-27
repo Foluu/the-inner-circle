@@ -24,3 +24,8 @@ const bubbleSchema = new mongoose.Schema({
 
 const Bubble = mongoose.model("Bubble", bubbleSchema);
 export default Bubble;
+
+
+
+
+

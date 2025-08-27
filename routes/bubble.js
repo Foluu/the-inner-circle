@@ -1,11 +1,12 @@
 
 import express from "express";
-import Bubble from "../models/bubble.js"; 
+import mongoose from "mongoose";
+import Bubble from "../models/bubble.js";
 import Space from "../models/space.js";
 import { verifyToken } from "../middleware/authMiddleware.js";
 
-const router = express.Router();
 
+const router = express.Router();
 
 
 // Send a Bubble
@@ -23,8 +24,8 @@ router.post("/:spaceId", verifyToken, async (req, res) => {
       space: req.params.spaceId,
       content,
       mediaUrl,
-      expiresAt: Date.now() + 1000 * 60 * 60 * 24 // 24 hrs
     });
+
 
     await bubble.save();
     res.status(201).json(bubble);
@@ -35,27 +36,29 @@ router.post("/:spaceId", verifyToken, async (req, res) => {
 
 
 // Get Bubbles in a Space
+
 router.get("/:spaceId", verifyToken, async (req, res) => {
   try {
-    const space = await Space.findById(req.params.spaceId);
+    const { spaceId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(spaceId)) {
+      return res.status(400).json({ message: "Invalid space ID" });
+    }
+
+    const space = await Space.findById(spaceId);
     if (!space || !space.members.includes(req.user.id)) {
       return res.status(403).json({ message: "Access denied" });
     }
 
-    const bubbles = await Bubble.find({
-  space: req.params.spaceId,
-  expiresAt: { $gt: Date.now() }
-})
-  .sort({ createdAt: 1 })
-  .populate("sender", "name");  
+    const bubbles = await Bubble.find({ space: spaceId }).sort({ createdAt: 1 }).populate("sender", "name");
 
+    res.status(200).json(bubbles);
 
-    res.json(bubbles);
   } catch (err) {
+    console.error("[BUBBLES] Fetch error:", err);
     res.status(500).json({ message: "Failed to fetch Bubbles", error: err.message });
   }
+
 });
-
-
 
 export default router;
