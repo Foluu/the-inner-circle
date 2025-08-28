@@ -1,7 +1,5 @@
 
 
-import DOMPurify from "dompurify";
-
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("[INIT] DOM fully loaded");
