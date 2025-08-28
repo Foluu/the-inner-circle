@@ -1,3 +1,8 @@
+
+
+import DOMPurify from "dompurify";
+
+
 document.addEventListener("DOMContentLoaded", () => {
   console.log("[INIT] DOM fully loaded");
 
@@ -22,8 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "Authorization": `Bearer ${token}`
     };
   }
-
-
 
 
 // Initialize emoji picker
@@ -56,8 +59,6 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
       console.log("[SPACES] Fetched:", spaces);
 
       spaceList.innerHTML = ""; // Clear sidebar before re-render
-
-
 
 
 
