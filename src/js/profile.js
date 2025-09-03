@@ -21,38 +21,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     console.log("Log in validated- Username:", userName);
 
-    try {
-        const response = await fetch("https://the-inner-circle-rad8.onrender.com/profile/${userId}", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (!response.ok) throw new Error(`HTTP ${response.status} - Failed to fetch profile data.`);
-
-        const userData = await response.json();
-
-        console.log("Fetched user data:", userData);
-
-
-        // Update profile details dynamically
-        document.getElementById("profile-avatar").src =
-            userData.avatar || "/images/default-avatar.png";
-
-
-        document.getElementById("profile-username").textContent =
+      document.getElementById("profile-username").textContent =
             userName || "Unknown User";
 
 
-        document.getElementById("profile-bio").textContent =
-            userData.bio?.trim() || "No bio available yet.";
 
-
-    } catch (error) {
-        console.error("Error fetching profile:", error);
-        
-        alert("Error loading your profile. Please try again later.");
-    }
+    
 
 
 
