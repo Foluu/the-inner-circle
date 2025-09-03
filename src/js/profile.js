@@ -55,20 +55,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userData = await response.json();
     console.log("Fetched user data:", userData);
 
-    // Update profile details dynamically
-    const avatarEl = document.getElementById("profile-avatar");
-    if (avatarEl) {
-        avatarEl.src = userData.avatar || "/images/default-avatar.png";
-    } else {
-        console.warn("Element with ID 'profile-avatar' not found.");
-    }
 
-    const bioEl = document.getElementById("profile-bio");
-    if (bioEl) {
-        bioEl.textContent = userData.bio?.trim() || "No bio available yet.";
-    } else {
-        console.warn("Element with ID 'profile-bio' not found.");
-    }
+    // Update profile details dynamically
+        const avatarEl = document.getElementById("profile-avatar");
+        if (avatarEl) {
+            // Check if the avatar path starts with "/uploads"
+            if (userData.avatar && userData.avatar.startsWith("/uploads")) {
+                avatarEl.src = `https://the-inner-circle-rad8.onrender.com${userData.avatar}`;
+            } else {
+                avatarEl.src = "/images/default-avatar.png";
+            }
+        } else {
+            console.warn("Element with ID 'profile-avatar' not found.");
+        }
+
+
+    // User Bio Details
+
+        const bioEl = document.getElementById("profile-bio");
+        if (bioEl) {
+            bioEl.textContent = userData.bio?.trim() || "No bio available yet.";
+        } else {
+            console.warn("Element with ID 'profile-bio' not found.");
+        }
+
+
+
 
 } catch (error) {
     console.error("Error fetching profile:", error);
@@ -131,31 +143,37 @@ editForm.addEventListener("submit", async (e) => {
 
 
     // Update DOM
-    document.getElementById("profile-avatar").src = updatedData.avatar || "/images/default-avatar.png";
-    document.getElementById("profile-username").textContent = updatedData.name;
-    document.getElementById("profile-bio").textContent = updatedData.bio;
+   const avatarEl = document.getElementById("profile-avatar");
+      if (avatarEl) {
+          avatarEl.src =
+              updatedData.avatar && updatedData.avatar.startsWith("/uploads")
+                  ? `https://the-inner-circle-rad8.onrender.com${updatedData.avatar}`
+                  : "/images/default-avatar.png";
+      }
+
+      const usernameEl = document.getElementById("profile-username");
+      if (usernameEl) usernameEl.textContent = updatedData.name;
+
+      const bioEl = document.getElementById("profile-bio");
+      if (bioEl) bioEl.textContent = updatedData.bio || "No bio available yet.";
+
+      // Update localStorage
+      localStorage.setItem("user-name", updatedData.name);
+      localStorage.setItem("user", JSON.stringify(updatedData));
+
+      // Clear file input and hide modal
+      document.getElementById("edit-avatar").value = "";
+      modal.classList.add("hidden");
 
 
-    // Update localStorage
-    localStorage.setItem("user-name", updatedData.name);
-    localStorage.setItem("user", JSON.stringify(updatedData));
-
-
-
-    modal.classList.add("hidden");
-  } catch (err) {
-    console.error("Update failed:", err);
-    alert("Error updating profile. Try again later.");
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    alert("Error updating profile. Please try again.");
   }
+
+
+
 });
-
-    
-
-
-
-
-
-
 
 
 
