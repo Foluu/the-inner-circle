@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         document.getElementById("profile-username").textContent =
-            userData.name || userObj.name || "Unknown User";
+            userName || "Unknown User";
 
 
         document.getElementById("profile-bio").textContent =
@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     } catch (error) {
         console.error("Error fetching profile:", error);
+        
         alert("Error loading your profile. Please try again later.");
     }
 
