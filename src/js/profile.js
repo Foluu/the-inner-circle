@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("user-id");
+    const userName = localStorage.getItem("user-name");
     const userObj = JSON.parse(localStorage.getItem("user") || "{}");
 
 
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    
+    console.log("Log in validated- Username:", userName);
 
     try {
         const response = await fetch("https://the-inner-circle-rad8.onrender.com/profile/${userId}", {
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const userData = await response.json();
 
-
+        console.log("Fetched user data:", userData);
 
 
         // Update profile details dynamically
