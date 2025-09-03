@@ -83,9 +83,13 @@
         cursor: pointer;
         }
 
-        .sidebar-icon:hover {
-        /* background: #c2c1c4; */
-        color: #5e35b1;
+        #sidebar-link {
+        text-decoration: none;
+        color: inherit;
+        }
+
+        #sidebar-link:hover  {
+            color: #5e35b1;
         }
 
         .sidebar-icon.active {
@@ -119,7 +123,7 @@
         }
 
         .avatar {
-        width: 400px;
+        width: 160px;
         height: 150px;
         background: #ddd;
         }
@@ -219,11 +223,11 @@
             </div>
 
             <div class="sidebar-icon">
-            <i class="fas fa-home"><a href="home.html"></a></i>
+            <a href="home.html" id="sidebar-link"><i class="fas fa-home"></i></a>
             </div>
 
             <div class="sidebar-icon">
-            <i class="fas fa-rocket"><a href="space.html"></a></i>
+            <a href="space.html" id="sidebar-link"><i class="fas fa-rocket"></i></a>
             </div>
 
         </div>
@@ -240,22 +244,20 @@
             <p> </p><br>
 
             <div class="profile-section">
-                <div class="avatar"><img src="images/members/05.jpg" style="width: 160px; height: 150px;"></div>
+                <div class="avatar">
+                    <img id="profile-avatar" src="images/default-avatar.png" alt="User Avatar" style="width: 160px; height: 150px; border-radius: 10px;">
+                </div>
 
                 <div class="profile-info">
-                    <h1 id="username"> USER’S NAME </h1>
+                    <h1 id="profile-username">Loading...</h1>
 
                     <h2>About me</h2>
+                    <p id="profile-bio">Loading user information...</p>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                    <button class="edit-btn">Edit</button>
-
+                    <button id="edit-profile-btn" class="edit-btn">Edit</button>
                 </div>
             </div>
+
 
 
             <div class="spaces-header">

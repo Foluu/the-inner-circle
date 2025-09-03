@@ -27,6 +27,7 @@ app.use(express.json());
 app.use("/auth", authroute);
 app.use("/spaces", spaceRoutes);
 app.use("/bubbles", bubbleRoutes);
+app.use("/uploads", express.static("uploads"));
 
 
 // Socket.io handling
