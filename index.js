@@ -1,3 +1,5 @@
+
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -11,6 +13,8 @@ import spaceRoutes from "./routes/space.js";
 import bubbleRoutes from "./routes/bubble.js";
 import Bubble from "./models/bubble.js";
 import Space from "./models/space.js";
+import profileRoutes from "./routes/profile.js";
+
 
 
 const app = express();
@@ -27,6 +31,7 @@ app.use(express.json());
 app.use("/auth", authroute);
 app.use("/spaces", spaceRoutes);
 app.use("/bubbles", bubbleRoutes);
+app.use("/profile", profileRoutes);
 app.use("/uploads", express.static("uploads"));
 
 
