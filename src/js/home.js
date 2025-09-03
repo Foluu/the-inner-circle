@@ -2,6 +2,25 @@
 document.addEventListener("DOMContentLoaded", () => {
 
 
+//================== Validate login status and insert User name ========================================================
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("user-id");
+    const userName = localStorage.getItem("user-name");
+    const userObj = JSON.parse(localStorage.getItem("user") || "{}");
+
+    if (!userId || !token) {
+        alert("You must be logged in to view this page.");
+        window.location.href = "login.html";
+        return;
+
+    }
+
+    document.getElementById("user--name").textContent =   userName || "Unknown User";
+
+    document.querySelector(".header-search-box img").src =  userObj.avatar || "images/default-avatar.png";
+
+
+
 //============= Populate User Space List Dynamically ===============================
 
   const spaceTableBody = document.querySelector(".space-list");

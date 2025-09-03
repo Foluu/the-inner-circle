@@ -76,17 +76,91 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 
 
-    
+//================== Edit Profile Modal and Form Handling ========================================================
 
+
+// Elements
+const editBtn = document.querySelector(".edit-btn");
+const modal = document.getElementById("edit-modal");
+const closeModal = document.getElementById("close-modal");
+const editForm = document.getElementById("edit-profile-form");
+
+
+// Open modal
+editBtn.addEventListener("click", () => {
+  modal.classList.remove("hidden");
+  document.getElementById("edit-username").value = localStorage.getItem("user-name") || "";
+  document.getElementById("edit-bio").value = document.getElementById("profile-bio").textContent.trim();
 });
 
 
-// Optional: Edit button behavior
+// Close modal
+closeModal.addEventListener("click", () => modal.classList.add("hidden"));
+window.addEventListener("click", (e) => { if (e.target === modal) modal.classList.add("hidden"); });
 
-// document.getElementById("edit-profile-btn").addEventListener("click", () => {
-//     window.location.href = "edit-profile.html";
 
-// });
+
+// Handle form submission
+editForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("user-id");
+  const apiUrl = `https://the-inner-circle-rad8.onrender.com/profile/${encodeURIComponent(userId)}`;
+
+  const formData = new FormData();
+  formData.append("name", document.getElementById("edit-username").value.trim());
+  formData.append("bio", document.getElementById("edit-bio").value.trim());
+  const avatarFile = document.getElementById("edit-avatar").files[0];
+  if (avatarFile) formData.append("avatar", avatarFile);
+
+
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData
+    });
+
+    if (!response.ok) throw new Error(`HTTP ${response.status} - Failed to update profile.`);
+
+    const updatedData = await response.json();
+    alert("Profile updated successfully!");
+
+
+    // Update DOM
+    document.getElementById("profile-avatar").src = updatedData.avatar || "/images/default-avatar.png";
+    document.getElementById("profile-username").textContent = updatedData.name;
+    document.getElementById("profile-bio").textContent = updatedData.bio;
+
+
+    // Update localStorage
+    localStorage.setItem("user-name", updatedData.name);
+    localStorage.setItem("user", JSON.stringify(updatedData));
+
+
+
+    modal.classList.add("hidden");
+  } catch (err) {
+    console.error("Update failed:", err);
+    alert("Error updating profile. Try again later.");
+  }
+});
+
+    
+
+
+
+
+
+
+
+
+
+});
+
 
 
 
