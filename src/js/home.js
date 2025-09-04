@@ -292,7 +292,7 @@ document.getElementById("openRequestsModalBtn").addEventListener("click", async 
 
 
   try {
-    const token = localStorage.getItem("token"); // or wherever you store auth token
+    const token = localStorage.getItem("token"); 
     const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/user-admin", {
       headers: {
         "Authorization": `Bearer ${token}`

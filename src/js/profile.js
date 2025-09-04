@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("Fetched user data:", userData);
 
 
-    // Update profile details dynamically
+   // Update profile details dynamically
         const avatarEl = document.getElementById("profile-avatar");
         if (avatarEl) {
             // Check if the avatar path starts with "/uploads"
@@ -178,9 +178,8 @@ editForm.addEventListener("submit", async (e) => {
 
 // ================== Fetch and Display Spaces Where User is Admin =====================
 
-    async function fetchAdminSpaces() {
+        async function fetchAdminSpaces() {
         const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("user-id");
         const spacesContainer = document.getElementById("admin-spaces");
 
         if (!spacesContainer) {
@@ -190,24 +189,22 @@ editForm.addEventListener("submit", async (e) => {
 
 
         try {
-            const response = await fetch(`https://the-inner-circle-rad8.onrender.com/spaces/admin/${encodeURIComponent(userId)}`, {
-                method: "GET",
+            const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/user-admin", {
                 headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
+                    "Authorization": `Bearer ${token}`
                 }
             });
 
-            if (!response.ok) throw new Error(`HTTP ${response.status} - Failed to fetch admin spaces.`);
+            if (!res.ok) throw new Error(`HTTP ${res.status} - Failed to fetch admin spaces.`);
 
-            const spaces = await response.json();
+            const spaces = await res.json();
             console.log("Fetched admin spaces:", spaces);
 
 
             // Clear placeholder
             spacesContainer.innerHTML = "";
 
-            if (spaces.length === 0) {
+            if (!spaces || spaces.length === 0) {
                 spacesContainer.innerHTML = `<p class="text-gray-500">You don't manage any spaces yet.</p>`;
                 return;
             }
@@ -217,11 +214,22 @@ editForm.addEventListener("submit", async (e) => {
             spaces.forEach(space => {
                 const spaceCard = document.createElement("div");
                 spaceCard.classList.add("space-card");
+
+
+                // Fix avatar path handling like we did for profile avatar
+                let avatarUrl = "/images/default-space.png";
+                if (space.avatar) {
+                    if (space.avatar.startsWith("/uploads")) {
+                        avatarUrl = `https://the-inner-circle-rad8.onrender.com${space.avatar}`;
+                    } else if (space.avatar.startsWith("http")) {
+                        avatarUrl = space.avatar;
+                    }
+                }
+
+
                 spaceCard.innerHTML = `
                     <div class="space-avatar">
-                        <img src="${space.avatar?.startsWith("/uploads")
-                            ? `https://the-inner-circle-rad8.onrender.com${space.avatar}`
-                            : "/images/default-space.png"}" 
+                        <img src="${avatarUrl}" 
                             style="width: 60px; height: 60px; object-fit: cover;">
                     </div>
                     <div class="space-info">
@@ -236,20 +244,17 @@ editForm.addEventListener("submit", async (e) => {
                 spacesContainer.appendChild(spaceCard);
             });
 
+
         } catch (error) {
             console.error("Error fetching admin spaces:", error);
-            spacesContainer.innerHTML = `<p class="text-red-500">Unable to load your spaces at the moment.</p>`;
+            spacesContainer.innerHTML
+                = `<p class="text-red-500">Error loading your spaces. Please try again later.</p>`;
         }
     }
 
 
-
-    // Call after DOM is ready
-    fetchAdminSpaces();
-
-
-
-
+        // Call after DOM is ready
+        fetchAdminSpaces();
 
 
 
