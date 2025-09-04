@@ -192,7 +192,7 @@ editForm.addEventListener("submit", async (e) => {
             const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/user-admin", {
                 headers: {
                     "Authorization": `Bearer ${token}`
-                }
+                },
             });
 
             if (!res.ok) throw new Error(`HTTP ${res.status} - Failed to fetch admin spaces.`);
@@ -224,7 +224,8 @@ editForm.addEventListener("submit", async (e) => {
                     } else if (space.avatar.startsWith("http")) {
                         avatarUrl = space.avatar;
                     }
-                }
+                }t
+
 
 
                 spaceCard.innerHTML = `
@@ -236,8 +237,8 @@ editForm.addEventListener("submit", async (e) => {
                         <h3>${space.name}</h3>
                         <p>${space.description || "No description provided."}</p>
                         <div class="space-meta">
-                            <span>${space.membersCount || 0} members</span> • 
-                            <span>${space.bubblesCount || 0} bubbles</span>
+                            <span>${space.members.length || 0} members</span> • 
+                            <span>Created at ${space.createdAt}</span>
                         </div>
                     </div>
                 `;
@@ -255,9 +256,6 @@ editForm.addEventListener("submit", async (e) => {
 
         // Call after DOM is ready
         fetchAdminSpaces();
-
-
-
 
 
 
