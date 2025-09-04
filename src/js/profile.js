@@ -224,7 +224,7 @@ editForm.addEventListener("submit", async (e) => {
                     } else if (space.avatar.startsWith("http")) {
                         avatarUrl = space.avatar;
                     }
-                }t
+                }
 
 
 
