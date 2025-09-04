@@ -217,7 +217,7 @@ editForm.addEventListener("submit", async (e) => {
 
 
                 // Fix avatar path handling like we did for profile avatar
-                let avatarUrl = "/images/default-space.png";
+                let avatarUrl = "images/icn.png"; // Default avatar
                 if (space.avatar) {
                     if (space.avatar.startsWith("/uploads")) {
                         avatarUrl = `https://the-inner-circle-rad8.onrender.com${space.avatar}`;
