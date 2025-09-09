@@ -60,15 +60,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
    // Update profile details dynamically
         const avatarEl = document.getElementById("profile-avatar");
-        if (avatarEl)  {
-          avatarEl.src =
-              updatedData.avatar && updatedData.avatar.startsWith("/uploads")
-                  ? `https://the-inner-circle-rad8.onrender.com${updatedData.avatar}`
-                  : "/images/default-avatar.png";
-      }    // replaced...
+        if (avatarEl) {
+            // Check if the avatar path starts with "/uploads"
+            if (userData.avatar && userData.avatar.startsWith("/uploads")) {
+                avatarEl.src = `https://the-inner-circle-rad8.onrender.com${userData.avatar}`;
+            } else {
+                avatarEl.src = "/images/default-avatar.png";
+            }
+        } else {
+            console.warn("Element with ID 'profile-avatar' not found.");
+        }
 
 
-
+        
     // User Bio Details
 
         const bioEl = document.getElementById("profile-bio");
