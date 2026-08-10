@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="css/style-2.css">
     <link rel="stylesheet" href="css/style-3.css">
     <link rel="stylesheet" href="css/toast.css">
-    
+
     <!-- Emoji Mart Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.css">
 
@@ -228,6 +228,20 @@
             }
         .close { float: right; font-size: 24px; cursor: pointer; }
 
+        .save-btn {
+              background: #5e35b1;
+              color: white;
+              border: none;
+              padding: 10px 20px;
+              border-radius: 6px;
+              cursor: pointer;
+              margin-top: 15px;
+            }
+
+        .save-btn:hover {
+              background: #4527a0;
+             }
+
     </style>
 
 </head>
@@ -410,7 +424,7 @@
                     <label style="text-align:center;">Avatar:</label><br>
                     <input type="file" id="edit-avatar" name="avatar" accept=".png, .jpg, .jpeg" /><br>
 
-                    <button type="submit" style="text-align:center;" color:purple;>Save Changes</button>
+                    <button type="submit" class="save-btn" style="text-align:center;">Save Changes</button>
                     </form>
                 </div>
             </div>
