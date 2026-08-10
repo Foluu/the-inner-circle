@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="css/style-2.css">
     <link rel="stylesheet" href="css/style-3.css">
     <link rel="stylesheet" href="css/toast.css">
+    
     <!-- Emoji Mart Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.css">
 
@@ -222,8 +223,9 @@
         }
         .modal.hidden { display: none; }
         .modal-content {
-            background: white; padding: 20px; border-radius: 20px; width: 350px; height: 300px;
-        }
+            background: white; padding: 20px; border-radius: 12px; width: 400px;
+            min-height: 500px; max-height: 80vh; overflow-y: auto;
+            }
         .close { float: right; font-size: 24px; cursor: pointer; }
 
     </style>
@@ -406,7 +408,7 @@
                     <textarea id="edit-bio" name="bio" rows="4" placeholder="Tell us about you..."></textarea><br>
 
                     <label style="text-align:center;">Avatar:</label><br>
-                    <input type="file" id="edit-avatar" name="avatar" accept=".png, .jpg, .jpeg" />
+                    <input type="file" id="edit-avatar" name="avatar" accept=".png, .jpg, .jpeg" /><br>
 
                     <button type="submit" style="text-align:center;" color:purple;>Save Changes</button>
                     </form>
@@ -415,9 +417,10 @@
 
 
 
-    <script src="js/toast.js"></script>
-    <script src="js/profile.js"></script>
-
+    <script src="js/toast.js"></script>       
+    <script  src="js/profile.js"></script>
+    
+   
 </body>
 
 </html>
