@@ -4,5 +4,8 @@
     box-sizing: border-box;
 }
 body{
-    background: linear-gradient(to bottom rgb(128, 9, 0), rgb(67, 80, 0));
+    font-family: Arial, sans-serif;
+    background-color: #b81414;
+    color: #333;
+    line-height: 1.6;
 }
