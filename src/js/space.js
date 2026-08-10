@@ -14,6 +14,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const spaceList   = document.querySelector(".space-list");
   const spaceTitle  = document.getElementById("spaceTitle");
 
+  // Helper: auto-resize textarea height
+  function autoResizeTextarea(el) {
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 140) + "px";
+  }
+
+  if (bubbleInput) {
+    bubbleInput.addEventListener("input", () => autoResizeTextarea(bubbleInput));
+  }
+
   // Helper: check token presence
   function getAuthHeaders() {
     const token = localStorage.getItem("token");
@@ -33,6 +44,7 @@ const emojiBtn = document.getElementById("emoji-btn");
 const picker = new EmojiMart.Picker({
   onEmojiSelect: (emoji) => {
     bubbleInput.value += emoji.native; // Appends emoji to input
+    autoResizeTextarea(bubbleInput);
   }
 });
 
@@ -194,6 +206,7 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
     socket.emit("send-bubble", bubbleData);
 
     bubbleInput.value = ""; // Clear input
+    autoResizeTextarea(bubbleInput);
   });
 
   // Real-time listener for new bubbles
@@ -206,9 +219,10 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
     }
   });
 
-  // Enter key sends message
-  bubbleInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
+  // Enter key sends message, Shift+Enter inserts newline
+  bubbleInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
       console.log("[INPUT] Enter key pressed");
       sendBtn.click();
     }
@@ -260,6 +274,7 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
       bubbleInput.value = bubbleInput.value
         ? bubbleInput.value + " " + transcript
         : transcript;
+      autoResizeTextarea(bubbleInput);
     };
 
     recog.onerror = (e) => {
