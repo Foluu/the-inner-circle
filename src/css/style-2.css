@@ -11786,3 +11786,81 @@ footer.ranna-bg-dark {
 .footer-menu ul li:last-child:after {
 	display: none;
 }
+
+/* Home footer */
+.site-footer.ranna-bg-dark {
+	padding: 92px 0 64px;
+	border-top: 4px solid #E330CE;
+	background-color: #111111;
+}
+
+.site-footer .site-footer-content {
+	max-width: 1120px;
+	margin: 0 auto;
+}
+
+.site-footer .footer-logo {
+	margin-bottom: 28px;
+}
+
+.site-footer .footer-logo img {
+	display: block;
+	width: min(100%, 360px);
+	height: auto;
+	margin: 0 auto;
+}
+
+.site-footer .footer-tagline {
+	margin: 0;
+	color: #b8b8b8;
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 1.6;
+}
+
+.site-footer .footer-divider {
+	width: 100%;
+	height: 1px;
+	margin: 44px 0 38px;
+	background-color: #333333;
+}
+
+.site-footer .footer-credit a {
+	display: inline-block;
+	color: #1685ff;
+	font-size: 18px;
+	line-height: 1.4;
+	transition: color 0.2s ease;
+}
+
+.site-footer .footer-credit a:hover,
+.site-footer .footer-credit a:focus-visible {
+	color: #E330CE;
+}
+
+.site-footer .footer-credit a:focus-visible {
+	outline: 2px solid #E330CE;
+	outline-offset: 6px;
+}
+
+@media only screen and (max-width: 767px) {
+	.site-footer.ranna-bg-dark {
+		padding: 68px 0 48px;
+	}
+
+	.site-footer .footer-logo {
+		margin-bottom: 22px;
+	}
+
+	.site-footer .footer-logo img {
+		width: min(100%, 280px);
+	}
+
+	.site-footer .footer-tagline {
+		font-size: 16px;
+	}
+
+	.site-footer .footer-divider {
+		margin: 34px 0 30px;
+	}
+}
