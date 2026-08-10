@@ -27,11 +27,13 @@
         }
 
 
-        alert("🎉 Signup successful!  Welcome to the Inner circle!");
-        window.location.href = "login.html"; 
+        Toast.success("🎉 Signup successful! Welcome to the Inner Circle!");
+        setTimeout(() => {
+          window.location.href = "login.html"; 
+        }, 1200);
 
       } catch (err) {
-        alert(err.message);
+        Toast.error(err.message);
       }
     });
 

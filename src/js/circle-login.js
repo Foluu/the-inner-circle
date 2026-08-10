@@ -36,13 +36,15 @@
           localStorage.setItem("user-id",  data.user.id);
           localStorage.setItem("user-name", data.user.name);
 
-        alert("Welcome, Inner Circle Member! 🎉");
+        Toast.success("Welcome, Inner Circle Member! 🎉");
         
         // Redirect to homepage
-        window.location.href = "home.html";
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 1200);
 
       } catch (err) {
-        alert(err.message);
+        Toast.error(err.message);
       }
     });
 

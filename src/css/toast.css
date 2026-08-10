@@ -1,0 +1,184 @@
+/* ==========================================================================
+   Inner Circle Toast Notification System (Sonner-Inspired Light Aesthetic)
+   ========================================================================== */
+
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: max-content;
+  max-width: 350px;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  #toast-container {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    max-width: none;
+    width: auto;
+  }
+}
+
+.ic-toast {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  min-height: 48px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(15, 23, 42, 0.06);
+  border-left: 4px solid #E330CE;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.96);
+  transition: transform 0.25s cubic-bezier(0.21, 1.02, 0.73, 1), opacity 0.25s cubic-bezier(0.21, 1.02, 0.73, 1);
+}
+
+.ic-toast.ic-toast-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.ic-toast.ic-toast-hide {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.94);
+}
+
+/* Toast Variant Themes */
+.ic-toast-success {
+  border-left-color: #10B981;
+}
+.ic-toast-success .ic-toast-icon {
+  color: #10B981;
+}
+
+.ic-toast-error {
+  border-left-color: #EF4444;
+}
+.ic-toast-error .ic-toast-icon {
+  color: #EF4444;
+}
+
+.ic-toast-warning {
+  border-left-color: #F59E0B;
+}
+.ic-toast-warning .ic-toast-icon {
+  color: #F59E0B;
+}
+
+.ic-toast-info {
+  border-left-color: #E330CE;
+}
+.ic-toast-info .ic-toast-icon {
+  color: #E330CE;
+}
+
+/* Toast Icon Wrapper */
+.ic-toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.ic-toast-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Toast Message Content */
+.ic-toast-content {
+  flex-grow: 1;
+  word-break: break-word;
+}
+
+.ic-toast-message {
+  margin: 0;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* Toast Close Button */
+.ic-toast-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.ic-toast-close svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+
+.ic-toast-close:hover {
+  color: #334155;
+  background-color: #f1f5f9;
+}
+
+/* Slim Toast Progress Line */
+.ic-toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.ic-toast-progress-bar {
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  animation: toastProgress linear forwards;
+}
+
+.ic-toast-success .ic-toast-progress-bar {
+  background-color: #10B981;
+}
+.ic-toast-error .ic-toast-progress-bar {
+  background-color: #EF4444;
+}
+.ic-toast-warning .ic-toast-progress-bar {
+  background-color: #F59E0B;
+}
+.ic-toast-info .ic-toast-progress-bar {
+  background-color: #E330CE;
+}
+
+@keyframes toastProgress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
