@@ -1,0 +1,9 @@
+*{
+    margin: 0 auto;
+    padding: 0 2rem;
+    max-width: 900px;
+    box-sizing: border-box;
+}
+body{
+    background-color: red;
+}
