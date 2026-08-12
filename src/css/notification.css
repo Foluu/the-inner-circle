@@ -1,4 +1,4 @@
- * {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -24,6 +24,13 @@ body{
     padding-bottom: 18px;
     border-bottom: 1px solid #eeeeee;
     margin-bottom: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+.notification-heading i{
+    cursor: pointer;
 }
 .notification{
     width: 100%;
