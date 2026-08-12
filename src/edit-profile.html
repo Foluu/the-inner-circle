@@ -223,12 +223,15 @@
         
         .modal.hidden { display: none; }
         .modal-content {
-            background: white; padding: 24px; border-radius: 12px; width: 90%;
+            background: white; padding: 28px 32px; border-radius: 12px; width: 90%;
             max-width: 600px; min-width: 60vh; max-height: 85vh; overflow-y: auto;
             }
-        .close { float: right; font-size: 24px; cursor: pointer; }
-        .modal-content,
-        .modal-header,
+        .close { float: right; font-size: 28px; cursor: pointer; }
+        
+        .modal-header h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
             #edit-profile-form,
             #edit-profile-form label,
             #edit-profile-form input,
@@ -243,23 +246,42 @@
          }
 
         #edit-profile-form label {
-    display: block;
-    width: 100%;
+        display: block;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 16px;
+        margin-bottom: 6px;
          }
 
-        #edit-profile-form input[type="text"],
+        #edit-profile-form input[type="text"] 
         #edit-profile-form textarea {
          width: 100%;
+         font-size: 16px;
+         padding: 10px 12px;
+         border-radius: 6px;
+         border: 1px solid rgb(152, 44, 173);
+         }
+
+        #edit-profile-form textarea {
+          font-size: 15px;
+          line-height: 1.5;
+         }
+
+        #edit-profile-form input[type="file"] {
+          font-size: 15px;
+          padding: 8px;
          }
 
         .save-btn {
               background: #913a94;
               color: white;
               border: none;
-              padding: 10px 20px;
+              padding: 12px 24px;
               border-radius: 6px;
               cursor: pointer;
               margin-top: 15px;
+              font-size: 16px;
             }
 
         .save-btn:hover {
