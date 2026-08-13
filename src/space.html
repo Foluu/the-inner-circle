@@ -31,7 +31,10 @@
     <!-- Modernizr Js -->
     <!-- <script src="js/modernizr-3.6.0.min.js"></script> -->
 
-    <!-- Emoji Mart Styles -->
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="css/style-2.css">
+    <link rel="stylesheet" href="css/style-3.css">
+    <link rel="stylesheet" href="css/toast.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.css">
 
     <!-- Emoji Mart Script -->
@@ -239,6 +242,8 @@
           margin: 5px 0 0;
           font-size: 0.95rem;
           color: white;
+          white-space: pre-wrap;
+          word-break: break-word;
         }
 
         .bubble-content .timestamp {
@@ -253,7 +258,7 @@
         /* Input bar */
         .chat-input {
           display: flex;
-          align-items: center;
+          align-items: flex-end;
           padding: 0.75rem 1rem;
           background-color: #000000;
           margin-top: 1rem;
@@ -266,17 +271,26 @@
           font-size: 1.2rem;
           color: #ffffff;
           cursor: pointer;
+          margin-bottom: 6px;
         }
 
+        .chat-input textarea,
         .chat-input input {
           flex: 1;
           border: none;
           padding: 0.6rem 1rem;
           font-size: 1rem;
-          border: 0.5px solid;
-          border-color: #cf3cc5;
+          font-family: inherit;
+          border: 0.5px solid #cf3cc5;
           background-color: #000000;
           color: white;
+          resize: none;
+          min-height: 42px;
+          max-height: 140px;
+          overflow-y: auto;
+          line-height: 1.4;
+          box-sizing: border-box;
+          border-radius: 4px;
         }
 
         .chat-input .send-btn {
@@ -496,7 +510,7 @@
         <button id="emoji-btn"><i class="fas fa-smile"></i></button>
         <div id="emoji-container" class="hidden"></div><p> </p>
 
-        <input type="text" id="bubbleInput" placeholder="Blow a bubble..." /><p> </p>
+        <textarea id="bubbleInput" rows="1" placeholder="Blow a bubble..."></textarea><p> </p>
 
         <button><i class="fas fa-microphone"  id="dictate-btn" title="Dictate message"></i></button><p> </p>
         <button class="send-btn" id="send-btn">Send</button>
@@ -527,7 +541,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
 
-  <script  src="js/space.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/space.js"></script>
 
     <script>
       const menuToggle = document.getElementById("menuToggle");

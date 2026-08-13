@@ -31,6 +31,11 @@
     <!-- Modernizr Js -->
     <!-- <script src="js/modernizr-3.6.0.min.js"></script> -->
 
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="css/style-2.css">
+    <link rel="stylesheet" href="css/style-3.css">
+    <link rel="stylesheet" href="css/toast.css">
+
     <!-- Emoji Mart Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.css">
 
@@ -38,6 +43,168 @@
     <script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
 
     <!-- <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script> -->
+
+
+     <!-- Header Area Start Here -->
+     <header class="header-one">
+
+
+
+
+            <div id="header-main-menu" class="header-main-menu header-sticky">
+                <div class="container">                    
+                    <div class="row">
+                        <div class="col-lg-8 col-md-3 col-sm-4 col-4 possition-static">
+
+                            <div class="site-logo-mobile">
+                                <a href="home.html" class="sticky-logo-light"><img src="images/13.png" alt="Site Logo"></a>
+                                <a href="home.html" class="sticky-logo-dark"><img src="images/13.png" alt="Site Logo"></a>
+                            </div>
+
+                            <nav class="site-nav">
+                                <ul id="site-menu" class="site-menu">
+
+                                    <li>
+                                        <a href="home.html">Home</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Profile</a>
+                                        <ul class="dropdown-menu-col-1">
+                                            <li>
+                                                <a href="edit-profile.html">Edit Profile</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="openCreateModal">Create Space</a>
+                                            </li>
+                                             <li>
+                                                <a href="#" class="openJoinSpaceModal">Join a Space</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="possition-static hide-on-mobile-menu">
+                                        <a href="#">Pages</a>
+                                        <div class="template-mega-menu">
+                                            <div class="container">
+                                                <div class="row">
+
+                                                    <div class="col-4">
+                                                        <div class="menu-ctg-title">Home</div>
+                                                        <ul class="sub-menu">
+                                                            <li>
+                                                                <a href="home.html">
+                                                                    <i class="fas fa-home"></i>Home</a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="menu-ctg-title">Space</div>
+                                                        <ul class="sub-menu">
+                                                            <li>
+                                                                <a href="space.html"><i class="fas fa-cog"></i>Manage your Circle</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="space.html"><i class="fas fa-rocket"></i>Explore your Galaxy</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+ 
+                                    <li>
+                                        <a href="#">Settings</a>
+                                        <ul class="dropdown-menu-col-1">
+                                            <li>
+                                                <a href="notification.html">Notification settings</a>
+                                            </li>
+                                            <li>
+                                                <a href="">Themes</a>
+                                            </li>
+                                             <li>
+                                                <a href="login.html">Logout</a>
+                                            </li>
+                                        </ul>  
+                                    </li>
+
+                                </ul>
+                            </nav>
+
+                            <!-- Mobile view Toggle Button -->
+                            <button id="mobileMenuToggle" class="mobile-menu-toggle d-lg-none">
+                            <i class="fas fa-bars"></i>
+                            </button>
+
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="header-bottom d-none d-lg-block">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-4 d-none d-lg-block">
+                        </div>
+
+                        <div class="col-lg-4 d-none d-lg-block">
+                            <div class="site-logo-desktop">
+                                <a href="home.html" class="main-logo"><img src="images/13.png" alt="Site Logo"></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="nav-action-elements-layout3">
+
+                                <ul>
+                                    <li>
+                                        <div class="header-search-box">
+                                            <img id="user-profile-avatar" src="images/icn.png" alt="Profile picture" style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover;">
+                                            <h3 id="user--name" style="display: inline-block; margin-left: 10px; font-size: 1.2em; vertical-align: middle;">Username</h3>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </header>
+
+
+            <!-- Mobile Menu Overlay -->
+            <div id="mobileMenu" class="mobile-menu">
+                <div class="mobile-menu-header">
+                    <button id="mobileMenuClose" class="close-btn" style="background-color: #2f0526;">&times;</button>
+                </div>
+                <ul class="mobile-menu-list">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="#">Edit Profile</a></li>
+                    <li><a href="#" id="openCreateSpaceMobile">Create Space</a></li>
+                    <li><a href="#" class="openJoinSpaceModal">Join a Space</a></li>
+                    <li><a href="space.html">Explore Galaxy</a></li>
+                    <li><a href="#">Manage Admin Setup</a></li>
+                    <li><a href="#">Notification Settings</a></li>
+                    <li><a href="#">Themes</a></li>
+                    <li><a href="login.html">Logout</a></li>
+                </ul>
+            </div>
+            <!-- Backdrop -->
+            <div id="mobileMenuBackdrop" class="menu-backdrop hidden"></div>
+            
+             <!-- Header Area End Here -->
+
 
 
     <style>
@@ -89,11 +256,11 @@
         }
 
         #sidebar-link:hover  {
-            color: #5e35b1;
+            color: rgb(152, 44, 173);
         }
 
         .sidebar-icon.active {
-        color: #5e35b1;
+        color:  rgb(152, 44, 173);
         }
 
         /* Main Content */
@@ -130,7 +297,7 @@
 
         .profile-info h1 {
         font-size: 22px;
-        color: #5e35b1;
+        color:  rgb(152, 44, 173);
         }
 
         .profile-info h2 {
@@ -150,13 +317,13 @@
         color: rgb(0, 0, 0);
         padding: 10px 20px;
         border: 1 rem;
-        border-color: #5e35b1;
+        border-color:  rgb(152, 44, 173);
         cursor: pointer;
         border-style: solid;
         }
 
         .edit-btn:hover {
-            background: #5e35b1;
+            background:  rgb(152, 44, 173);
             color: white;
         }
 
@@ -207,20 +374,84 @@
         color: #888;
         margin-top: 5px;
         }
-
         .modal {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 999;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 999;
         }
+        
         .modal.hidden { display: none; }
         .modal-content {
-            background: white; padding: 20px; border-radius: 12px; width: 350px;
+            background: white; padding: 28px 32px; border-radius: 12px; width: 90%;
+            max-width: 600px; min-width: 60vh; max-height: 85vh; overflow-y: auto;
+            }
+        .close { float: right; font-size: 28px; cursor: pointer; }
+        
+        .modal-content,
+        .modal-header,
+            #edit-profile-form,
+            #edit-profile-form label,
+            #edit-profile-form input,
+            #edit-profile-form textarea {
+        text-align: left;
+         }
+
+        #edit-profile-form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+         }
+
+        .modal-header h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
         }
-        .close { float: right; font-size: 24px; cursor: pointer; }
+
+        #edit-profile-form label {
+        display: block;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 16px;
+        margin-bottom: 6px;
+         }
+
+        #edit-profile-form input[type="text"] 
+        #edit-profile-form textarea {
+         width: 100%;
+         font-size: 16px;
+         padding: 10px 12px;
+         border-radius: 6px;
+         border: 1px solid rgb(152, 44, 173);
+         }
+
+        #edit-profile-form textarea {
+          font-size: 15px;
+          line-height: 1.5;
+         }
+
+        #edit-profile-form input[type="file"] {
+          font-size: 15px;
+          padding: 8px;
+         }
+
+        .save-btn {
+              background: #913a94;
+              color: white;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 6px;
+              cursor: pointer;
+              margin-top: 15px;
+              font-size: 16px;
+            }
+
+        .save-btn:hover {
+              background:  rgb(152, 44, 173);
+             }
 
     </style>
 
@@ -390,29 +621,37 @@
 
 
         <!-- Edit Profile Popup Modal -->
-            <div id="edit-modal" class="modal hidden">
-                <div class="modal-content">
-                    <span id="close-modal" class="close">&times;</span>
-                    <h2>Edit Profile</h2>
-                    <form id="edit-profile-form" enctype="multipart/form-data">
-                    <label>Username:</label>
-                    <input type="text" id="edit-username" name="name" placeholder="Enter username" required />
+            <!-- Edit Profile Popup Modal -->
+       <div id="edit-modal" class="modal hidden">
+            <div class="modal-content">
+              <div class="modal-header">
+                 <h2>Edit Profile</h2>
+                 <span id="close-modal" class="close">&times;</span>
+             </div>
+                 <form id="edit-profile-form" enctype="multipart/form-data">
+                 <label for="edit-username">Username</label>
+                 <input type="text" id="edit-username" name="name" placeholder="Enter username" required />
 
-                    <label>Bio:</label>
-                    <textarea id="edit-bio" name="bio" rows="4" placeholder="Tell us about you..."></textarea>
+                 <label for="edit-bio">Bio</label>
+                 <textarea id="edit-bio" name="bio" rows="4" placeholder="Tell us about you..."></textarea>
 
-                    <label>Avatar:</label>
-                    <input type="file" id="edit-avatar" name="avatar" accept=".png, .jpg, .jpeg" />
+                 <label for="edit-avatar">Avatar</label>
+                 <input type="file" id="edit-avatar" name="avatar" accept=".png, .jpg, .jpeg" />
 
-                    <button type="submit">Save Changes</button>
-                    </form>
-                </div>
-            </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+         </div>
+       </div>
 
 
 
+    <script src="js/toast.js"></script>       
     <script  src="js/profile.js"></script>
 
+
+
+    
+   
 </body>
 
 </html>

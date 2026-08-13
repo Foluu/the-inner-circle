@@ -9,10 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const userObj = JSON.parse(localStorage.getItem("user") || "{}");
 
     if (!userId || !token) {
-        alert("You must be logged in to view this page.");
-        window.location.href = "login.html";
+        Toast.warning("You must be logged in to view this page.");
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1200);
         return;
-
     }
 
     document.getElementById("user--name").textContent =   userName || "Unknown User";
@@ -155,10 +156,11 @@ document.addEventListener("DOMContentLoaded", () => {
           // Success! Close modal and optionally refresh space list
           createModal.classList.add('hidden');
           createForm.reset();
-          alert('Space created successfully!'); // Replace this with custom toast/modal
+          Toast.success('Space created successfully!');
+          loadSpaces();
         } catch (err) {
           console.error(err);
-          alert('Error: ' + err.message);
+          Toast.error('Error: ' + err.message);
         }
       });
 
@@ -248,11 +250,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         joinModal.classList.add("hidden");
 
                       } else {
-                        alert(result.message || "Could not send join request.");
+                        Toast.error(result.message || "Could not send join request.");
                       }
                     } catch (err) {
                       console.error("Join request failed:", err);
-                      alert("Something went wrong. Try again.");
+                      Toast.error("Something went wrong. Try again.");
                     } finally {
                       btn.disabled = false;
                       btn.textContent = "Request to Join";
@@ -377,13 +379,13 @@ document.getElementById("openRequestsModalBtn").addEventListener("click", async 
 
           if (res.ok) {
             document.getElementById(`user-${userId}-${spaceId}`).remove();
-
+            Toast.success(approve ? "Request approved!" : "Request rejected!");
           } else {
-            alert("Failed to process request.");
+            Toast.error("Failed to process request.");
           }
         } catch (err) {
           console.error(err);
-          alert("Error handling request.");
+          Toast.error("Error handling request.");
         }
       }
 

@@ -14,9 +14,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 //================== Validate login status and insert User name ========================================================
 
     if (!userId || !token) {
-        alert("You must be logged in to view this page.");
-
-        window.location.href = "login.html";
+        Toast.warning("You must be logged in to view this page.");
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1200);
         return;
     }
 
@@ -87,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 } catch (error) {
     console.error("Error fetching profile:", error);
-    alert("Error loading your profile. Please try again later.");
+    Toast.error("Error loading your profile. Please try again later.");
 }
 
 
@@ -142,7 +143,7 @@ editForm.addEventListener("submit", async (e) => {
     if (!response.ok) throw new Error(`HTTP ${response.status} - Failed to update profile.`);
 
     const updatedData = await response.json();
-    alert("Profile updated successfully!");
+    Toast.success("Profile updated successfully!");
 
 
     // Update DOM
@@ -171,7 +172,7 @@ editForm.addEventListener("submit", async (e) => {
 
   } catch (error) {
     console.error("Error updating profile:", error);
-    alert("Error updating profile. Please try again.");
+    Toast.error("Error updating profile. Please try again.");
   }
 
 
