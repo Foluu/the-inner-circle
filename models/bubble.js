@@ -13,7 +13,7 @@ const bubbleSchema = new mongoose.Schema({
   },
   content: {
     type: String,
-    required: true
+    default: ""
   },
   mediaUrl: String,
   pinned: {

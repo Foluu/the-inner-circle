@@ -1,5 +1,9 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+    const isLocalHost = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const SERVER_URL = isLocalHost
+      ? (location.port === "3000" ? location.origin : "http://localhost:3000")
+      : "https://the-inner-circle-rad8.onrender.com";
 
 
 //================== Validate login status and insert User name ========================================================
@@ -29,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadSpaces() {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces", {
+      const res = await fetch(`${SERVER_URL}/spaces`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       for (const space of spaces) {
         // Fetch bubbles count
-        const bubbleRes = await fetch(`https://the-inner-circle-rad8.onrender.com/bubbles/${space._id}`, {
+        const bubbleRes = await fetch(`${SERVER_URL}/bubbles/${space._id}`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`
@@ -142,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // TODO: Replace this with your backend call
         try {
-          const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/create", {
+          const res = await fetch(`${SERVER_URL}/spaces/create`, {
             method: 'POST',
             headers: { 
               "Content-Type": "application/json",
@@ -187,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
               try {
-                const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/all", {
+                const res = await fetch(`${SERVER_URL}/spaces/all`, {
                   headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -232,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     btn.textContent = "Requesting...";
 
                     try {
-                      const res = await fetch(`https://the-inner-circle-rad8.onrender.com/spaces/${spaceId}/request-join`, {
+                      const res = await fetch(`${SERVER_URL}/spaces/${spaceId}/request-join`, {
                         method: "POST",
                         headers: {
                           "Content-Type": "application/json",
@@ -295,7 +299,7 @@ document.getElementById("openRequestsModalBtn").addEventListener("click", async 
 
   try {
     const token = localStorage.getItem("token"); 
-    const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/user-admin", {
+    const res = await fetch(`${SERVER_URL}/spaces/user-admin`, {
       headers: {
         "Authorization": `Bearer ${token}`
       }
@@ -365,7 +369,7 @@ document.getElementById("openRequestsModalBtn").addEventListener("click", async 
 
       async function handleRequest(spaceId, userId, approve) {
         const token = localStorage.getItem("token");
-        const endpoint = `https://the-inner-circle-rad8.onrender.com/spaces/${spaceId}/${approve ? "approve-request" : "reject-request"}/${userId}`;
+        const endpoint = `${SERVER_URL}/spaces/${spaceId}/${approve ? "approve-request" : "reject-request"}/${userId}`;
 
         try {
           const res = await fetch(endpoint, {

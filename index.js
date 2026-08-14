@@ -33,6 +33,17 @@ app.use("/spaces", spaceRoutes);
 app.use("/bubbles", bubbleRoutes);
 app.use("/profile", profileRoutes);
 app.use("/uploads", express.static("uploads"));
+app.use(express.static("src"));
+
+app.get("/", (req, res) => {
+  res.redirect("/login.html");
+});
+
+app.get("/home", (req, res) => res.redirect("/home.html"));
+app.get("/space", (req, res) => res.redirect("/space.html"));
+app.get("/login", (req, res) => res.redirect("/login.html"));
+app.get("/signup", (req, res) => res.redirect("/signup.html"));
+app.get("/edit-profile", (req, res) => res.redirect("/edit-profile.html"));
 
 
 // Socket.io handling
@@ -46,24 +57,40 @@ io.on("connection", (socket) => {
     console.log(`User joined space: ${spaceId}`);
   });
 
-        socket.on("send-bubble", async (data) => {
+  socket.on("send-bubble", async (data) => {
     try {
+      if (!data || !data.spaceId) {
+        console.warn("[SOCKET] Invalid bubble data received:", data);
+        return;
+      }
+
+      let senderId = data.sender;
+      if (!mongoose.Types.ObjectId.isValid(senderId)) {
+        senderId = new mongoose.Types.ObjectId();
+      }
+
       const saved = await new Bubble({
-        sender   : data.sender,      // ObjectId
+        sender   : senderId,
         space    : data.spaceId,
-        content  : data.content,
+        content  : data.content || "",
+        mediaUrl : data.mediaUrl || null,
         expiresAt: Date.now() + 86_400_000
       }).save();
 
       const populated = await saved.populate("sender", "name");
 
-      io.to(data.spaceId).emit("receive-bubble", {
-        spaceId : data.spaceId,
-        content : populated.content,
-        sender  : { name: populated.sender.name },
-        timestamp: populated.createdAt
-      });
-      
+      const bubblePayload = {
+        _id      : saved._id,
+        spaceId  : data.spaceId,
+        content  : saved.content,
+        mediaUrl : saved.mediaUrl,
+        sender   : { name: populated?.sender?.name || data.user || "Unknown" },
+        createdAt: saved.createdAt
+      };
+
+      console.log("[SOCKET] Broadcasting bubble payload:", bubblePayload);
+      io.to(data.spaceId).emit("receive-bubble", bubblePayload);
+
     } catch (err) {
       console.error("Error saving bubble:", err);
     }

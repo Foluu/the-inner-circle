@@ -1,6 +1,10 @@
 
 
 document.addEventListener("DOMContentLoaded", async () => {
+    const isLocalHost = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const SERVER_URL = isLocalHost
+      ? (location.port === "3000" ? location.origin : "http://localhost:3000")
+      : "https://the-inner-circle-rad8.onrender.com";
 
 
 
@@ -35,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         throw new Error("Missing user credentials. Please log in again.");
     }
 
-    const apiUrl = `https://the-inner-circle-rad8.onrender.com/profile/${encodeURIComponent(userId)}`;
+    const apiUrl = `${SERVER_URL}/profile/${encodeURIComponent(userId)}`;
     console.log("Fetching profile from:", apiUrl);
 
     const response = await fetch(apiUrl, {
@@ -64,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (avatarEl) {
             // Check if the avatar path starts with "/uploads"
             if (userData.avatar && userData.avatar.startsWith("/uploads")) {
-                avatarEl.src = `https://the-inner-circle-rad8.onrender.com${userData.avatar}`;
+                avatarEl.src = `${SERVER_URL}${userData.avatar}`;
             } else {
                 avatarEl.src = "/images/default-avatar.png";
             }
@@ -123,7 +127,7 @@ editForm.addEventListener("submit", async (e) => {
 
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("user-id");
-  const apiUrl = `https://the-inner-circle-rad8.onrender.com/profile/${encodeURIComponent(userId)}`;
+  const apiUrl = `${SERVER_URL}/profile/${encodeURIComponent(userId)}`;
 
   const formData = new FormData();
   formData.append("name", document.getElementById("edit-username").value.trim());
@@ -151,7 +155,7 @@ editForm.addEventListener("submit", async (e) => {
       if (avatarEl) {
           avatarEl.src =
               updatedData.avatar && updatedData.avatar.startsWith("/uploads")
-                  ? `https://the-inner-circle-rad8.onrender.com${updatedData.avatar}`
+                  ? `${SERVER_URL}${updatedData.avatar}`
                   : "/images/default-avatar.png";
       }
 
@@ -193,7 +197,7 @@ editForm.addEventListener("submit", async (e) => {
 
 
         try {
-            const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces/user-admin", {
+            const res = await fetch(`${SERVER_URL}/spaces/user-admin`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 },
@@ -224,7 +228,7 @@ editForm.addEventListener("submit", async (e) => {
                 let avatarUrl = "images/icn.png"; // Default avatar
                 if (space.avatar) {
                     if (space.avatar.startsWith("/uploads")) {
-                        avatarUrl = `https://the-inner-circle-rad8.onrender.com${space.avatar}`;
+                        avatarUrl = `${SERVER_URL}${space.avatar}`;
                     } else if (space.avatar.startsWith("http")) {
                         avatarUrl = space.avatar;
                     }

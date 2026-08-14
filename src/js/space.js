@@ -4,7 +4,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("[INIT] DOM fully loaded");
 
-  const socket = io("https://the-inner-circle-rad8.onrender.com"); // Prod endpoint
+  const isLocalHost = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  const SERVER_URL = isLocalHost
+    ? (location.port === "3000" ? location.origin : "http://localhost:3000")
+    : "https://the-inner-circle-rad8.onrender.com";
+
+  const socket = io(SERVER_URL);
   let currentSpaceId = null;
 
   // Cache elements
@@ -13,6 +18,117 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendBtn     = document.getElementById("send-btn");
   const spaceList   = document.querySelector(".space-list");
   const spaceTitle  = document.getElementById("spaceTitle");
+  const attachBtn   = document.getElementById("attach-btn");
+  const fileInput   = document.getElementById("fileInput");
+  const filePreviewBar = document.getElementById("filePreviewBar");
+  let selectedFile  = null;
+
+  // Helper: escape HTML
+  function escapeHtml(text) {
+    if (typeof text !== "string") return text || "";
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  // File Attachment Handling
+  if (attachBtn && fileInput) {
+    attachBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      selectedFile = file;
+      renderFilePreview(file);
+    });
+  }
+
+  // Clipboard Paste Support (Ctrl+V Image/File)
+  if (bubbleInput) {
+    bubbleInput.addEventListener("paste", (e) => {
+      const items = (e.clipboardData || e.originalEvent?.clipboardData)?.items;
+      if (!items) return;
+      for (const item of items) {
+        if (item.kind === "file") {
+          const file = item.getAsFile();
+          if (file) {
+            e.preventDefault();
+            selectedFile = file;
+            renderFilePreview(file);
+            if (typeof Toast !== "undefined") Toast.info("File attached from clipboard!");
+            break;
+          }
+        }
+      }
+    });
+  }
+
+  // Drag and Drop File Attachment Support
+  const chatAreaEl = document.querySelector(".chat-area") || bubbleArea;
+  if (chatAreaEl) {
+    ["dragenter", "dragover"].forEach((eventName) => {
+      chatAreaEl.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        chatAreaEl.classList.add("drag-over");
+      });
+    });
+
+    ["dragleave", "drop"].forEach((eventName) => {
+      chatAreaEl.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        chatAreaEl.classList.remove("drag-over");
+      });
+    });
+
+    chatAreaEl.addEventListener("drop", (e) => {
+      const files = e.dataTransfer?.files;
+      if (files && files.length > 0) {
+        selectedFile = files[0];
+        renderFilePreview(files[0]);
+        if (typeof Toast !== "undefined") Toast.info(`Attached file: ${files[0].name}`);
+      }
+    });
+  }
+
+  function renderFilePreview(file) {
+    if (!filePreviewBar) return;
+
+    const formattedSize = formatFileSize(file.size);
+    filePreviewBar.innerHTML = `
+      <i class="fas fa-file-alt" style="color: #cf3cc5;"></i>
+      <span class="file-preview-name">${escapeHtml(file.name)}</span>
+      <span class="file-preview-size">(${formattedSize})</span>
+      <button class="file-preview-remove" title="Remove attachment">&times;</button>
+    `;
+    filePreviewBar.classList.remove("hidden");
+
+    filePreviewBar.querySelector(".file-preview-remove").addEventListener("click", clearFileAttachment);
+  }
+
+  function clearFileAttachment() {
+    selectedFile = null;
+    if (fileInput) fileInput.value = "";
+    if (filePreviewBar) {
+      filePreviewBar.innerHTML = "";
+      filePreviewBar.classList.add("hidden");
+    }
+  }
+
+  function formatFileSize(bytes) {
+    if (!bytes) return "0 B";
+    const k = 1024;
+    const sizes = ["B", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+  }
 
   // Helper: auto-resize textarea height
   function autoResizeTextarea(el) {
@@ -61,7 +177,7 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
   async function loadSpaces() {
     console.log("[SPACES] Loading spaces...");
     try {
-      const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces", {
+      const res = await fetch(`${SERVER_URL}/spaces`, {
         method: "GET",
         headers: getAuthHeaders()
       });
@@ -70,12 +186,10 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
 
       spaceList.innerHTML = ""; // Clear sidebar before re-render
 
-
-
       for (const space of spaces) {
         // Fetch bubble count separately
         
-        const bubblesRes = await fetch(`https://the-inner-circle-rad8.onrender.com/bubbles/${space._id}`, {
+        const bubblesRes = await fetch(`${SERVER_URL}/bubbles/${space._id}`, {
           method: "GET",
           headers: getAuthHeaders()
         });
@@ -95,8 +209,25 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
         li.addEventListener("click", () => joinSpace(space._id, space.name));
         spaceList.appendChild(li);
       }
+
+      // Auto-join space from URL query param "?id=..." or default to first space
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetSpaceId = urlParams.get("id");
+
+      let autoJoinTarget = null;
+      if (targetSpaceId) {
+        autoJoinTarget = spaces.find(s => s._id === targetSpaceId);
+      }
+      if (!autoJoinTarget && spaces.length > 0) {
+        autoJoinTarget = spaces[0];
+      }
+
+      if (autoJoinTarget) {
+        joinSpace(autoJoinTarget._id, autoJoinTarget.name);
+      }
+
     } catch (err) {
-      console.error("[SPACES] Failed to load spaces:", err);q
+      console.error("[SPACES] Failed to load spaces:", err);
     }
   }
 
@@ -124,25 +255,77 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
 
 
   // Render a single bubble in the UI
+  const renderedBubbleKeys = new Set();
 
   function renderBubble(b) {
-  const safeContent = DOMPurify.sanitize(b.content);
-  const bubbleEl = document.createElement("div");
-  bubbleEl.className = "bubble";
+    if (!b) return;
+    const bubbleKey = b._id || `${b.content}_${b.mediaUrl}_${b.createdAt || b.timestamp}`;
+    if (bubbleKey && renderedBubbleKeys.has(bubbleKey)) {
+      return; // Deduplicate
+    }
+    if (bubbleKey) renderedBubbleKeys.add(bubbleKey);
 
-  bubbleEl.innerHTML = `
-    <div class="bubble-content">
-      <strong>${b.sender?.name || b.user || "Unknown"}</strong>
-      <p>${safeContent}</p>
-      <span class="timestamp">
-        ${new Date(b.createdAt || b.timestamp).toLocaleTimeString()}
-      </span>
-    </div>
-  `;
+    const safeContent = DOMPurify.sanitize(b.content || "");
+    const bubbleEl = document.createElement("div");
+    bubbleEl.className = "bubble";
 
-  bubbleArea.appendChild(bubbleEl);
-  bubbleArea.scrollTop = bubbleArea.scrollHeight;
-}
+    let mediaHtml = "";
+    if (b.mediaUrl) {
+      const fullUrl = b.mediaUrl.startsWith("/uploads")
+        ? `${SERVER_URL}${b.mediaUrl}`
+        : b.mediaUrl;
+
+      const isImage = /\.(jpeg|jpg|png|gif|webp)$/i.test(b.mediaUrl);
+      const isVideo = /\.(mp4|webm|mov)$/i.test(b.mediaUrl);
+      const isAudio = /\.(mp3|wav|ogg|m4a)$/i.test(b.mediaUrl);
+
+      if (isImage) {
+        mediaHtml = `
+          <div class="bubble-media-container">
+            <a href="${fullUrl}" target="_blank" rel="noopener noreferrer">
+              <img src="${fullUrl}" class="bubble-media-image" alt="Attachment" />
+            </a>
+          </div>
+        `;
+      } else if (isVideo) {
+        mediaHtml = `
+          <div class="bubble-media-container">
+            <video src="${fullUrl}" controls class="bubble-media-video"></video>
+          </div>
+        `;
+      } else if (isAudio) {
+        mediaHtml = `
+          <div class="bubble-media-container">
+            <audio src="${fullUrl}" controls class="bubble-media-audio"></audio>
+          </div>
+        `;
+      } else {
+        const fileName = b.mediaUrl.split("/").pop() || "Attachment";
+        mediaHtml = `
+          <div class="bubble-media-container">
+            <a href="${fullUrl}" class="bubble-media-file" download target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-file-download"></i>
+              <span>${escapeHtml(fileName)}</span>
+            </a>
+          </div>
+        `;
+      }
+    }
+
+    bubbleEl.innerHTML = `
+      <div class="bubble-content">
+        <strong>${escapeHtml(b.sender?.name || b.user || "Unknown")}</strong>
+        ${safeContent ? `<p>${safeContent}</p>` : ""}
+        ${mediaHtml}
+        <span class="timestamp">
+          ${new Date(b.createdAt || b.timestamp).toLocaleTimeString()}
+        </span>
+      </div>
+    `;
+
+    bubbleArea.appendChild(bubbleEl);
+    bubbleArea.scrollTop = bubbleArea.scrollHeight;
+  }
 
 
   // Load all bubbles for a given space
@@ -152,7 +335,7 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
     bubbleArea.innerHTML = ""; // Clear previous messages
 
     try {
-      const res = await fetch(`https://the-inner-circle-rad8.onrender.com/bubbles/${spaceId}`, {
+      const res = await fetch(`${SERVER_URL}/bubbles/${spaceId}`, {
         method: "GET",
         headers: getAuthHeaders()
       });
@@ -174,29 +357,73 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
 
   // Send a bubble
 
-  sendBtn.addEventListener("click", () => {
+  sendBtn.addEventListener("click", async () => {
     const text = bubbleInput.value.trim();
 
-    if (!text) {
-      console.warn("[SEND] No text entered");
+    if (!text && !selectedFile) {
+      console.warn("[SEND] No text or file entered");
       return;
     }
 
     if (!currentSpaceId) {
       console.warn("[SEND] No space selected");
+      if (typeof Toast !== "undefined") Toast.warning("Please select a space first.");
       return;
     }
 
     const id   = (localStorage.getItem("user-id") || "").trim();
     const name = (localStorage.getItem("user-name") || "").trim();
 
-    if (!id || !name) {
-      console.warn("[SEND] Missing user info in localStorage");
+    let uploadedMediaUrl = null;
+
+    if (selectedFile) {
+      sendBtn.disabled = true;
+      sendBtn.textContent = "Uploading...";
+      try {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+
+        const token = localStorage.getItem("token");
+        const uploadRes = await fetch(`${SERVER_URL}/bubbles/${currentSpaceId}/upload`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
+          body: formData
+        });
+
+        const contentType = uploadRes.headers.get("content-type") || "";
+        let uploadData;
+
+        if (contentType.includes("application/json")) {
+          uploadData = await uploadRes.json();
+        } else {
+          const rawText = await uploadRes.text();
+          console.error("[UPLOAD] Server returned non-JSON response:", rawText);
+          throw new Error(`Server returned HTML error (${uploadRes.status}). If testing locally, ensure backend server (npm start) is running on http://localhost:3000.`);
+        }
+
+        if (!uploadRes.ok) {
+          throw new Error(uploadData.message || "Failed to upload file");
+        }
+
+        uploadedMediaUrl = uploadData.mediaUrl;
+      } catch (err) {
+        console.error("[UPLOAD] Error uploading attachment:", err);
+        if (typeof Toast !== "undefined") Toast.error(err.message || "File upload failed.");
+        sendBtn.disabled = false;
+        sendBtn.textContent = "Send";
+        return;
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = "Send";
+      }
     }
 
     const bubbleData = {
       spaceId   : currentSpaceId,
       content   : text,
+      mediaUrl  : uploadedMediaUrl,
       sender    : id,
       user      : name,
       timestamp : new Date().toISOString()
@@ -205,8 +432,20 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
     console.log("[SEND] Emitting bubble:", bubbleData);
     socket.emit("send-bubble", bubbleData);
 
+    // Optimistically render bubble in sender's chat UI immediately
+    renderBubble({
+      _id: "local_" + Date.now(),
+      spaceId: currentSpaceId,
+      content: text,
+      mediaUrl: uploadedMediaUrl,
+      sender: { name: name || "You" },
+      user: name || "You",
+      createdAt: bubbleData.timestamp
+    });
+
     bubbleInput.value = ""; // Clear input
     autoResizeTextarea(bubbleInput);
+    clearFileAttachment();
   });
 
   // Real-time listener for new bubbles
@@ -214,7 +453,7 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
   socket.on("receive-bubble", (bubble) => {
     console.log("[SOCKET] Received bubble:", bubble);
 
-    if (bubble.spaceId === currentSpaceId) {
+    if (!bubble.spaceId || bubble.spaceId === currentSpaceId) {
       renderBubble(bubble);
     }
   });

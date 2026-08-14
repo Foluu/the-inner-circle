@@ -1,6 +1,11 @@
 
 
   document.addEventListener("DOMContentLoaded", () => {
+    const isLocalHost = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const SERVER_URL = isLocalHost
+      ? (location.port === "3000" ? location.origin : "http://localhost:3000")
+      : "https://the-inner-circle-rad8.onrender.com";
+
     const form = document.getElementById("signupForm");
 
 
@@ -12,7 +17,7 @@
       const password = document.getElementById("password").value;
 
       try {
-        const res = await fetch('https://the-inner-circle-rad8.onrender.com/auth/signup', {
+        const res = await fetch(`${SERVER_URL}/auth/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password })

@@ -1,12 +1,57 @@
 
 import express from "express";
 import mongoose from "mongoose";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 import Bubble from "../models/bubble.js";
 import Space from "../models/space.js";
 import { verifyToken } from "../middleware/authMiddleware.js";
 
 
 const router = express.Router();
+
+// Multer storage configuration for chat attachments
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dir = "uploads/chat";
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, `${uniqueSuffix}${path.extname(file.originalname)}`);
+  },
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 25 * 1024 * 1024 } // 25MB max limit
+});
+
+// Upload attachment endpoint
+router.post("/:spaceId/upload", verifyToken, upload.single("file"), async (req, res) => {
+  try {
+    const space = await Space.findById(req.params.spaceId);
+    if (!space || !space.members.includes(req.user.id)) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ message: "No file provided." });
+    }
+
+    const mediaUrl = `/uploads/chat/${req.file.filename}`;
+    res.status(201).json({
+      mediaUrl,
+      originalName: req.file.originalname,
+      mimeType: req.file.mimetype,
+      size: req.file.size
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to upload file", error: err.message });
+  }
+});
 
 
 // Send a Bubble
@@ -22,7 +67,7 @@ router.post("/:spaceId", verifyToken, async (req, res) => {
     const bubble = new Bubble({
       sender: req.user.id,
       space: req.params.spaceId,
-      content,
+      content: content || "",
       mediaUrl,
     });
 
