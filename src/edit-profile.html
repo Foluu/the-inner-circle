@@ -32,9 +32,10 @@
     <!-- <script src="js/modernizr-3.6.0.min.js"></script> -->
 
     <!-- Custom Css -->
-    <link rel="stylesheet" href="css/style-2.css">
+    <link rel="stylesheet" href="css/style-2.css?v=20260812-header-actions">
     <link rel="stylesheet" href="css/style-3.css">
     <link rel="stylesheet" href="css/toast.css">
+
     <!-- Emoji Mart Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.css">
 
@@ -43,7 +44,6 @@
 
     <!-- <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script> -->
 
-
     <style>
 
                 /* General reset */
@@ -51,58 +51,22 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: Arial, sans-serif;
         }
 
         body {
         display: flex;
+        flex-direction: column;
         background: #f9f8fb;
         color: #333;
         }
 
-        /* Sidebar */
-        .sidebar {
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 70px;
-            background: #f2e6fa;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
-            gap: 40px;
-            height: viewport-height;
-            position: fixed;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-icon {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        }
-
-        #sidebar-link {
-        text-decoration: none;
-        color: inherit;
-        }
-
-        #sidebar-link:hover  {
-            color: #5e35b1;
-        }
-
-        .sidebar-icon.active {
-        color: #5e35b1;
+        .main,
+        .modal {
+        font-family: Arial, sans-serif;
         }
 
         /* Main Content */
         .main {
-        margin-left: 70px;
         flex: 1;
         padding: 20px 30px;
         }
@@ -134,7 +98,7 @@
 
         .profile-info h1 {
         font-size: 22px;
-        color: #5e35b1;
+        color:  rgb(152, 44, 173);
         }
 
         .profile-info h2 {
@@ -154,13 +118,13 @@
         color: rgb(0, 0, 0);
         padding: 10px 20px;
         border: 1 rem;
-        border-color: #5e35b1;
+        border-color:  rgb(152, 44, 173);
         cursor: pointer;
         border-style: solid;
         }
 
         .edit-btn:hover {
-            background: #5e35b1;
+            background:  rgb(152, 44, 173);
             color: white;
         }
 
@@ -211,45 +175,181 @@
         color: #888;
         margin-top: 5px;
         }
-
         .modal {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 999;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 999;
         }
+        
         .modal.hidden { display: none; }
         .modal-content {
-            background: white; padding: 20px; border-radius: 20px; width: 350px; height: 300px;
+            background: white; padding: 28px 32px; border-radius: 12px; width: 90%;
+            max-width: 600px; min-width: 60vh; max-height: 85vh; overflow-y: auto;
+            }
+        .close { float: right; font-size: 28px; cursor: pointer; }
+        
+        .modal-content,
+        .modal-header,
+            #edit-profile-form,
+            #edit-profile-form label,
+            #edit-profile-form input,
+            #edit-profile-form textarea {
+        text-align: left;
+         }
+
+        #edit-profile-form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+         }
+
+        .modal-header h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
         }
-        .close { float: right; font-size: 24px; cursor: pointer; }
+
+        #edit-profile-form label {
+        display: block;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 16px;
+        margin-bottom: 6px;
+         }
+
+        #edit-profile-form input[type="text"] 
+        #edit-profile-form textarea {
+         width: 100%;
+         font-size: 16px;
+         padding: 10px 12px;
+         border-radius: 6px;
+         border: 1px solid rgb(152, 44, 173);
+         }
+
+        #edit-profile-form textarea {
+          font-size: 15px;
+          line-height: 1.5;
+         }
+
+        #edit-profile-form input[type="file"] {
+          font-size: 15px;
+          padding: 8px;
+         }
+
+        .save-btn {
+              background: #913a94;
+              color: white;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 6px;
+              cursor: pointer;
+              margin-top: 15px;
+              font-size: 16px;
+            }
+
+        .save-btn:hover {
+              background:  rgb(152, 44, 173);
+             }
 
     </style>
 
 </head>
 
-<body>
+<body class="edit-profile-page">
 
+        <header class="header-one">
+            <div id="header-main-menu" class="header-main-menu header-sticky">
+                <div class="container">
+                    <div class="home-header-bar">
+                        <a href="home.html" class="home-header-brand" aria-label="The Inner Circle home">
+                            <img src="images/13.png" alt="The Inner Circle">
+                        </a>
 
-        <div class="sidebar">
+                        <nav class="site-nav" aria-label="Primary navigation">
+                            <ul id="site-menu" class="site-menu">
+                                <li><a href="home.html">Home</a></li>
+                                <li>
+                                    <a href="#" class="current" aria-current="page">Profile</a>
+                                    <ul class="dropdown-menu-col-1">
+                                        <li><a href="edit-profile.html" aria-current="page">Edit Profile</a></li>
+                                        <li><a href="home.html">Create Space</a></li>
+                                        <li><a href="home.html">Join a Space</a></li>
+                                    </ul>
+                                </li>
+                                <li class="possition-static hide-on-mobile-menu">
+                                    <a href="#">Pages</a>
+                                    <div class="template-mega-menu">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="menu-ctg-title">Home</div>
+                                                    <ul class="sub-menu">
+                                                        <li><a href="home.html"><i class="fas fa-home"></i>Home</a></li>
+                                                    </ul>
+                                                    <div class="menu-ctg-title">Space</div>
+                                                    <ul class="sub-menu">
+                                                        <li><a href="space.html"><i class="fas fa-cog"></i>Manage your Circle</a></li>
+                                                        <li><a href="space.html"><i class="fas fa-rocket"></i>Explore your Galaxy</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#">Settings</a>
+                                    <ul class="dropdown-menu-col-1">
+                                        <li><a href="notification.html">Notification settings</a></li>
+                                        <li><a href="themes.html">Themes</a></li>
+                                        <li><a href="login.html">Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
 
-            <div class="sidebar-icon active">
-            <i class="fas fa-pen"></i>
+                        <div class="home-header-actions">
+                            <a href="home.html#spaceSearch" class="home-header-icon" aria-label="Search spaces">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </a>
+                            <a href="notification.html" class="home-header-icon home-header-notification" aria-label="Notifications">
+                                <i class="far fa-bell" aria-hidden="true"></i>
+                                <i class="fas fa-circle home-header-notification-dot" aria-hidden="true"></i>
+                            </a>
+                            <a href="edit-profile.html" class="home-header-profile header-search-box" aria-label="Open profile" aria-current="page">
+                                <img id="user-profile-avatar" src="images/icn.png" alt="Profile picture">
+                                <span id="user--name" class="sr-only">Username</span>
+                                <i class="fas fa-chevron-down home-header-chevron" aria-hidden="true"></i>
+                            </a>
+                        </div>
+
+                        <button id="mobileMenuToggle" class="mobile-menu-toggle d-lg-none" aria-label="Open navigation">
+                            <i class="fas fa-bars" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
+        </header>
 
-            <div class="sidebar-icon">
-            <a href="home.html" id="sidebar-link"><i class="fas fa-home"></i></a>
+        <div id="mobileMenu" class="mobile-menu">
+            <div class="mobile-menu-header">
+                <button id="mobileMenuClose" class="close-btn" aria-label="Close navigation">&times;</button>
             </div>
-
-            <div class="sidebar-icon">
-            <a href="space.html" id="sidebar-link"><i class="fas fa-rocket"></i></a>
-            </div>
-
+            <ul class="mobile-menu-list">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="edit-profile.html" aria-current="page">Edit Profile</a></li>
+                <li><a href="home.html">Create Space</a></li>
+                <li><a href="home.html">Join a Space</a></li>
+                <li><a href="space.html">Explore Galaxy</a></li>
+                <li><a href="notification.html">Notification Settings</a></li>
+                <li><a href="themes.html">Themes</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
         </div>
+        <div id="mobileMenuBackdrop" class="menu-backdrop hidden"></div>
 
-       
         <div class="main">
 
             <div class="top-bar">
@@ -394,30 +494,38 @@
 
 
         <!-- Edit Profile Popup Modal -->
-            <div id="edit-modal" class="modal hidden">
-                <div class="modal-content">
-                    <span id="close-modal" class="close">&times;</span>
-                    <h2 style="text-align:center;">Edit Profile</h2>
-                    <form id="edit-profile-form" enctype="multipart/form-data">
-                    <label style="text-align:center;">Username:</label><br>
-                    <input type="text" id="edit-username" name="name" placeholder="Enter username" required /><br>
+            <!-- Edit Profile Popup Modal -->
+       <div id="edit-modal" class="modal hidden">
+            <div class="modal-content">
+              <div class="modal-header">
+                 <h2>Edit Profile</h2>
+                 <span id="close-modal" class="close">&times;</span>
+             </div>
+                 <form id="edit-profile-form" enctype="multipart/form-data">
+                 <label for="edit-username">Username</label>
+                 <input type="text" id="edit-username" name="name" placeholder="Enter username" required />
 
-                    <label style="text-align:center;">Bio:</label><br>
-                    <textarea id="edit-bio" name="bio" rows="4" placeholder="Tell us about you..."></textarea><br>
+                 <label for="edit-bio">Bio</label>
+                 <textarea id="edit-bio" name="bio" rows="4" placeholder="Tell us about you..."></textarea>
 
-                    <label style="text-align:center;">Avatar:</label><br>
-                    <input type="file" id="edit-avatar" name="avatar" accept=".png, .jpg, .jpeg" />
+                 <label for="edit-avatar">Avatar</label>
+                 <input type="file" id="edit-avatar" name="avatar" accept=".png, .jpg, .jpeg" />
 
-                    <button type="submit" style="text-align:center;" color:purple;>Save Changes</button>
-                    </form>
-                </div>
-            </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+         </div>
+       </div>
 
 
 
-    <script src="js/toast.js"></script>
-    <script src="js/profile.js"></script>
+    <script src="js/toast.js"></script>       
+    <script  src="js/profile.js"></script>
+    <script src="js/modals-logic.js"></script>
 
+
+
+    
+   
 </body>
 
 </html>

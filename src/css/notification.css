@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: #f5f6fa;
+    min-height: 100vh;
+    padding: 25px 35px;
+    color: #222;
+    font-family: Arial, Helvetica, sans-serif;   
+}
+.notification-container{
+    background: #ffffff;
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 25px 35px 30px;
+    border-radius: 8px;
+}
+.notification-heading{
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+.notification-heading i{
+    cursor: pointer;
+}
+.notification{
+    width: 100%;
+    min-height: 82px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-left: 3px solid #3679c9;
+    border-radius: 7px;
+    margin-bottom: 16px;
+    padding: 13px 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.avatar{
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 16px;
+}
+.avatar img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+.avatar i{
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f2ff;
+    color: #2471c8;
+    font-size: 22px;
+}
+.notification-content{
+    flex: 01;
+}
+.notification-title{
+    font-size: 14px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 4px;
+}
+.notification-descrption{
+    font-size: 9px;
+    color: #999;
+    margin-bottom: 5.9px;
+}
+.notification-date {
+    background: #f5f6f8;
+    color: #a0a0a0;
+    font-size: 9px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    /* white-space: nowrap; */
+    /* margin-left: 15px; */
+}
+.notification-time{
+    font-size: 12px;
+    color: #a5a5a5;
+}
+   .load-more-container{
+    display: flex;
+    margin-top: 25px;
+}
+.load-more{
+    display: inline-block;
+    background: #e5eefc;
+    color: #5286c8;
+    border: none;
+    border-radius: 4px;
+    padding: 9px 28px;
+    font-size: 10px;
+    cursor: pointer;
+}
+ .load-more:hover{
+    background: #d7e6fa;
+}
