@@ -1,36 +1,46 @@
+:root{
+    --font-fam: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, 
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";;
+    --purple-color: #e330ce;
+    --black-color: #222;
+}
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 body{
-    background: #f5f6fa;
+    background: var(--black-color);
     min-height: 100vh;
     padding: 25px 35px;
     color: #222;
-    font-family: Arial, Helvetica, sans-serif;   
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .notification-container{
-    background: #ffffff;
+    background: #1a1a1a;
     width: 100%;
     max-width: 1050px;
     margin: 0 auto;
     padding: 25px 35px 30px;
     border-radius: 8px;
+    border: 1px solid #e330ce ;
 }
 .notification-heading{
     font-size: 20px;
     font-weight: 600;
+    color: var(--purple-color);
+    font-family: var(--font-fam);
+    letter-spacing: 1.2px;
     padding-bottom: 18px;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #e330ce;
     margin-bottom: 25px;
-
     display: flex;
     align-items: center;
-    gap: 35px;
+    gap: 70px;
 }
 .notification-heading i{
     cursor: pointer;
+    color: var(--purple-color);
 }
 .notification{
     width: 100%;
@@ -38,12 +48,20 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #ffffff;
-    border-left: 3px solid #3679c9;
+    background: var(--black-color);
+    color: #FFF;
+    border-left: 3px solid #e330ce;
     border-radius: 7px;
     margin-bottom: 16px;
     padding: 13px 18px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); */
+}
+.notification:hover{
+    transform: translateY(-2px);
+    background-color: #2a2a2a; /* slightly lighter than default dark card */
+    box-shadow: 0 4px 12px rgba(255, 20, 145, 0.253); /* soft pink glow */
+    border-left-width: 5px; /* accent bar gets slightly thicker on hover */
 }
 .avatar{
     width: 52px;
@@ -67,51 +85,62 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #e8f2ff;
-    color: #2471c8;
+    background: var(--purple-color);
+    color: var(--black-color);
     font-size: 22px;
 }
 .notification-content{
     flex: 01;
+    line-height: 1.4;
+    margin-left: 15px;
 }
 .notification-title{
-    font-size: 14px;
+    font-size: 18px;
+    font-family: var(--font-fam);
     font-weight: 600;
-    color: #222;
-    margin-bottom: 4px;
+    color: #ffffff;
 }
+/* .notification-title:hover{
+    color: var(--purple-color);
+} */
 .notification-descrption{
-    font-size: 9px;
-    color: #999;
-    margin-bottom: 5.9px;
+    font-size: 14px;
+    color: #A8A8C0;
 }
 .notification-date {
-    background: #f5f6f8;
-    color: #a0a0a0;
-    font-size: 9px;
+    background: var(--purple-color);
+    color: var(--black-color);
+    font-weight: 400;
+    font-size: 12px;
     padding: 5px 10px;
     border-radius: 3px;
-    /* white-space: nowrap; */
-    /* margin-left: 15px; */
+    transition: transform 0.5s;
+}
+.notification-date:hover{
+    transform: translate(5px);
 }
 .notification-time{
     font-size: 12px;
-    color: #a5a5a5;
+    color: #7A7A8C;
 }
-   .load-more-container{
+.load-more-container{
     display: flex;
     margin-top: 25px;
 }
 .load-more{
     display: inline-block;
-    background: #e5eefc;
-    color: #5286c8;
+    background: #fff;
+    color: var(--black-color);
     border: none;
-    border-radius: 4px;
+    font-weight: bold;
+    border-radius: 10px;
     padding: 9px 28px;
-    font-size: 10px;
+    font-size: 16px;
     cursor: pointer;
+    transition: transform 0.6s;
 }
  .load-more:hover{
-    background: #d7e6fa;
+    background: var(--purple-color);
+    color: #fff;
+    transform: translate(-7px);
 }
