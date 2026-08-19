@@ -1,6 +1,4 @@
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
   console.log("[INIT] DOM fully loaded");
 
@@ -13,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendBtn     = document.getElementById("send-btn");
   const spaceList   = document.querySelector(".space-list");
   const spaceTitle  = document.getElementById("spaceTitle");
+  
+  window.renderGateState(false);
 
   // Helper: check token presence
   function getAuthHeaders() {
@@ -83,8 +83,19 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
         li.addEventListener("click", () => joinSpace(space._id, space.name));
         spaceList.appendChild(li);
       }
+      const urlParams  = new URLSearchParams(window.location.search);
+      const urlSpaceId = urlParams.get("id");
+
+      if (urlSpaceId) {
+        const targetSpace = spaces.find(s => s._id === urlSpaceId);
+        if (targetSpace) {
+          joinSpace(targetSpace._id, targetSpace.name);
+        } else {
+          console.warn("[SPACES] Space id from URL not found among fetched spaces:", urlSpaceId);
+        }
+      }
     } catch (err) {
-      console.error("[SPACES] Failed to load spaces:", err);q
+      console.error("[SPACES] Failed to load spaces:", err);
     }
   }
 
@@ -104,8 +115,9 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
 
     if (spaceTitle) {
       spaceTitle.textContent = name;
+      window.renderGateState(true);
     }
-
+     
     loadBubbles(spaceId);
   }
 
@@ -213,6 +225,21 @@ document.getElementById("emoji-btn").addEventListener("click", () => {
       sendBtn.click();
     }
   });
+   window.createSpace = async function createSpace(name) {
+    try {
+      const res = await fetch("https://the-inner-circle-rad8.onrender.com/spaces", {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ name })
+      });
+      const newSpace = await res.json();
+
+      await loadSpaces();
+      joinSpace(newSpace._id, newSpace.name);
+    } catch (err) {
+      console.error("[SPACES] Failed to create space:", err);
+    }
+  };
 
 
   // Load spaces on init

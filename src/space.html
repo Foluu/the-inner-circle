@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <!-- Main Css -->
     <link rel="stylesheet" href="css/main.css">
+    
     <!-- Bootstrap Css -->
      
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -403,12 +404,21 @@
 
 
           </style>
+          <link rel="stylesheet" href="css/notifications.css">
+          <link rel="stylesheet" href="css/mode.css">
+          <link rel="stylesheet" href="css/placeholder.css">
 
 </head>
 
 <body>
+ <div class="theme-switch-label">
+  <span class="theme-switch-knob">
+    <i class="fas fa-moon"></i>
+    <i class="fas fa-sun"></i>
+  </span>
+ </div>
 
-<!-- Preloader -->
+ <!-- Preloader -->
         <div id="preloader">
         <img src="images/preloader-icon.png" alt="Loading..." />
         </div>
@@ -439,7 +449,18 @@
     
 
     <!-- Main Space -->
-    <main class="chat-area">
+    <main class="chat-area no-space" id="chatArea">
+
+      <!--Shown when no space is open-->
+      <div class="space-gate">
+        <div class="gate-icon"><i class="fas fa-comments"></i></div>
+        <h2>No space open yet</h2>
+        <P>Select a space to start chatting, or create a new space to get started</P>
+        <div class="gate-actions">
+          <button type="button" id="createSpaceBtn" class="gate-btn primary">Create a Space</button> 
+        </div>
+      </div>
+      <div class="chat-live">
 
       <header class="chat-header">
 
@@ -472,14 +493,23 @@
 
         <div class="chat-controls">
           <i class="fas fa-search"></i>
-          <i class="fas fa-bell"></i>
+           <!-- this whole block replaces the single <i class="fas fa-bell"></i> line -->
+  <div class="notif-wrapper">
+    <div class="notif-bell">
+      <i class="fas fa-bell"></i>
+      <span class="notif-badge">0</span>
+    </div>
+    <div class="notif-panel">
+      <div class="notif-panel-header">
+        <button class="mark-read">Mark all read</button>
+      </div>
+      <ul class="notif-list">
+      </ul>
+    </div>
+    </div>
           <i class="fas fa-cog"></i>
         </div>
-
-
-
-
-      </header>
+</header>
 
       
       <!-- Bubbles Section -->
@@ -502,11 +532,22 @@
         <button class="send-btn" id="send-btn">Send</button>
 
       </footer>
-
+    </div>
 
     </main>
 
 
+  </div>
+  <div class="modal-overlay" id="createSpaceOverlay">
+    <form class="modal-box" id="createSpaceForm">
+      <h3>Create a Space</h3>
+      <label class="field-label" for="spaceNameInput">Space name</label>
+      <input type="text" id="spaceNameInput" placeholder="e.g. Design Squad" required />
+      <div class="modal-footer">
+        <button type="button" id="createSpaceCancel" class="modal-cancel">Cancel</button>
+        <button type="submit" class="modal-submit">Create</button>
+      </div>
+    </form>
   </div>
 
 
@@ -526,8 +567,12 @@
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
-
+   
+  <script  src="js/notifications.js"></script>
+  <script  src="js/mode.js"></script>
+  <script  src="js/placeholder.js"></script>
   <script  src="js/space.js"></script>
+  
 
     <script>
       const menuToggle = document.getElementById("menuToggle");

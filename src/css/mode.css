@@ -1,0 +1,93 @@
+/* ================================================================
+   THEME (dark/light) — css/theme.css
+   Depends on: js/theme.js adding class "light-mode" to <body>.
+   Every color used across notifications.css, space-gate.css, and
+   space.html's own styles should read from these variables.
+================================================================ */
+
+body {
+    --bg-page:            #000000;
+    --bg-sidebar:         #000000;
+    --bg-chat-area:       #000000;
+    --bg-header:          #781371;
+    --bg-bubble-area:     #000000;
+    --bg-bubble-content:  #000000;
+    --bg-input:           #000000;
+  
+    --border-accent:      #cf3cc5;
+  
+    --text-primary:       #ffffff;
+    --text-muted:         #807c7c;
+    --text-heading:       #dbdbdb;
+    --text-icon:          #777777;
+    --text-sender:        #961b8e;
+    --text-hover-bg:      #353333;
+  
+    --accent:             #cf3cc5;
+    --accent-strong:      #781371;
+  
+    background-color: var(--bg-page);
+    transition: background-color 0.25s ease;
+  }
+  
+  /* THE ONLY RULE THAT MATTERS FOR LIGHT MODE:
+     js/theme.js adds "light-mode" to <body>, this reacts to it. */
+  body.light-mode {
+    --bg-page:            #f4f2f5;
+    --bg-sidebar:         #ffffff;
+    --bg-chat-area:       #f4f2f5;
+    --bg-header:          #ecdaea;
+    --bg-bubble-area:     #ffffff;
+    --bg-bubble-content:  #ffffff;
+    --bg-input:           #ffffff;
+  
+    --border-accent:      #d9a8d5;
+  
+    --text-primary:       #2b2b2b;
+    --text-muted:         #8a8a8a;
+    --text-heading:       #4a154b;
+    --text-icon:          #6b5a6a;
+    --text-sender:        #a83aa0;
+    --text-hover-bg:      #ece5eb;
+  
+    --accent:             #cf3cc5;
+    --accent-strong:      #a85ba0;
+  }
+  
+  /* ===== Switch control ===== */
+  .theme-switch-label {
+    position: fixed;
+    top: 1rem;
+    right: 1.1rem;
+    z-index: 500;
+    display: inline-flex;
+    align-items: center;
+    width: 50px;
+    height: 25px;
+    background-color: rgba(128,128,128,0.2);
+    border: 1px solid var(--border-accent);
+    border-radius: 999px;
+    cursor: pointer;
+    padding: 3px;
+  }
+  
+  .theme-switch-knob {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.55rem;
+    transition: transform 0.25s ease;
+  }
+  
+  body.light-mode .theme-switch-knob {
+    transform: translateX(23px);
+  }
+  
+  .theme-switch-knob .fa-sun { display: none; }
+  body.light-mode .theme-switch-knob .fa-moon { display: none; }
+  body.light-mode .theme-switch-knob .fa-sun  { display: inline; }

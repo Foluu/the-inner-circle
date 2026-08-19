@@ -1,0 +1,135 @@
+/* ================================================================
+   NOTIFICATIONS — css/notifications.css
+   Depends on: a wrapper <div class="notif-wrapper"> containing a
+   bell trigger and a panel. JS (js/notifications.js) toggles the
+   "open" class on .notif-wrapper — this file just reacts to it.
+================================================================ */
+
+.notif-wrapper {
+    position: relative;
+    display: inline-flex;
+  }
+  
+  .notif-bell {
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    color: var(--text-icon, #777);
+    font-size: 1.15rem;
+  }
+  
+  .notif-bell:hover {
+    color: var(--text-primary, #fff);
+  }
+  
+  /* Unread badge — JS sets the number; hide it by removing this
+     element or setting display:none when count is 0 */
+  .notif-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: #ff4757;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1.5px solid var(--bg-header, #781371);
+    line-height: 1;
+  }
+  
+  /* Panel — hidden by default */
+  .notif-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 320px;
+    max-height: 380px;
+    background-color: var(--bg-sidebar, #0e0e0e);
+    border: 0.5px solid var(--border-accent, #cf3cc5);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(-8px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  }
+  
+  /* THE ONLY RULE THAT MATTERS FOR OPEN/CLOSE:
+     JS adds/removes "open" on .notif-wrapper, this reacts to it. */
+  .notif-wrapper.open .notif-panel {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  .notif-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    border-bottom: 0.5px solid var(--border-accent, #cf3cc5);
+  }
+  
+  .notif-panel-header h4 {
+    font-size: 0.95rem;
+    color: var(--text-primary, #fff);
+    font-weight: 600;
+  }
+  
+  .notif-panel-header .mark-read {
+    font-size: 0.75rem;
+    color: var(--accent, #cf3cc5);
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+  
+  .notif-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .notif-item {
+    display: flex;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 0.5px solid rgba(128,128,128,0.15);
+    cursor: pointer;
+  }
+  
+  .notif-item:hover { background-color: rgba(128,128,128,0.08); }
+  .notif-item:last-child { border-bottom: none; }
+  .notif-item.unread { background-color: rgba(207,60,197,0.08); }
+  
+  .notif-icon {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-header, #781371);
+    color: #fff;
+    font-size: 0.9rem;
+  }
+  
+  .notif-body { flex: 1; min-width: 0; }
+  .notif-body p { font-size: 0.85rem; color: var(--text-primary, #e6e6e6); line-height: 1.35; }
+  .notif-body p strong { color: var(--text-primary, #fff); font-weight: 600; }
+  .notif-body .notif-time { display: block; font-size: 0.7rem; color: var(--text-muted, #807c7c); margin-top: 3px; }
+  
+  .notif-empty {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--text-muted, #6c6c6c);
+    font-size: 0.85rem;
+  }
